@@ -56,7 +56,7 @@ class LoginController extends Controller
     function BusinessLogin($id){
        $business=Business::find($id);
        $user=User::find($business->owner_id);
-        Auth::login($user);
+        Auth::guard('web')->login($user);
         return redirect('/home');
     }
 

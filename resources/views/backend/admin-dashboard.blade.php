@@ -48,7 +48,7 @@
         @endforeach
 
     </div>
-    <h6 class="mt-2">Note : <span class="text-danger">You can only login to one business account at a time.You need to logout from the logged in account and again login.</span></h6>
+    <h6 class="mt-2">Note : <span class="text-danger">You can only login to one business account at a time.</span></h6>
 
 </div>
 
