@@ -9,12 +9,12 @@
                         <div class="wiz-box p-2">
                             <div class="d-flex gap-2">
                                 <div class="flex-grow-1 select-customer">
-                                    <v-select  :options="customers" v-model="customer" label="name" placeholder="Search Customer"></v-select>
+                                    <v-select  :options="customers" v-model="customer" label="site_name" placeholder="Search Construction Site"></v-select>
                                 </div>
                                 <div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <button class="btn btn-warning btn-sm text-white btn-block" @click="createCustomer = true"> <i class="fa fa-plus"></i> </button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                                 </div>
 
                                 <div class="d-flex gap-1 justify-content-end pe-2">
-                                    <div><a href="javascript:void(0)" class="btn btn-brand btn-brand-primary btn-sm" @click="createPayment()">{{lang.payment}}</a></div>
+                                    <div><a href="javascript:void(0)" class="btn btn-brand btn-brand-primary btn-sm" @click="createPayment()">Save Stock</a></div>
                                 </div>
                             </div>
                         </div>
@@ -285,7 +285,7 @@
                                                     <td>{{cart.title}}</td>
                                                     <td>{{appConfig('app_currency')}}{{cart.sell_price | formatNumber}}</td>
                                                     <td>{{appConfig('app_currency')}}{{cart.tax_amount | formatNumber}} <sub>( {{cart.tax_percentage}}% )</sub></td>
-                                                    <td>{{cart.quantity}} {{ cart.product.unit ?  cart.product.unit.title : ''}}</td>
+                                                    <td>{{cart.quantity}} {{ cart.unit ?  cart.unit : ''}}</td>
                                                     <td>{{appConfig('app_currency')}} {{cart.total_price | formatNumber}}</td>
                                                 </tr>
                                                 <tr>
@@ -596,30 +596,24 @@
                 });
             },
 
-            addToCart: function(product_id){
-
-                axios.get('../../vue/api/product-available-stock-qty-without-invoice/' + product_id + '/'+this.sell.id).then((response) => {
-                    if (response.data > 0){
-                        if (this.isAlreadyInCart(product_id)) {
-                            this.carts.forEach((cart) => {
-                                if (cart.id == product_id) {
-                                    cart.quantity = cart.quantity + 1;
-                                }
-                            });
-                        }else {
-                            this.products.forEach((product) => {
-                                if (product.id == product_id) {
-                                    this.product = product;
-                                    this.product.quantity = 1;
-                                    this.carts.unshift(this.product);
-                                }
-                            });
-                        }
-                    }else{
-                        toastr["error"]("Stock Out");
-                    };
+            addToCart: function (product_id) {
+            if (this.isAlreadyInCart(product_id)) {
+                this.carts.forEach((cart) => {
+                    if (cart.id == product_id) {
+                        cart.quantity = cart.quantity + 1;
+                    }
                 });
-            },
+            } else {
+                this.products.forEach((product) => {
+                    if (product.id == product_id) {
+                        this.product = product;
+                        this.product.quantity = 1;
+                        this.carts.unshift(this.product);
+                    }
+                });
+            }
+        },
+
 
             isAlreadyInCart: function (product_id) {
                 let result = false;
@@ -760,7 +754,7 @@
                 if (this.customer != null){
                     return true;
                 }else{
-                    alert('Please select a Customer');
+                    alert('Please select a site');
                     return false;
                 }
             },
@@ -780,24 +774,12 @@
 
         computed: {
             subTotalotalCartsValue(){
-                this.carts.forEach((element, key) => {
-                    axios.get('../../vue/api/product-available-stock-qty-without-invoice/' + element.id + '/'+this.sell.id).then((response) => {
-                        if (response.data == 0){
-                            this.carts.splice(key, 1)
-                        };
-
-                        if (element.quantity > response.data) {
-                            toastr["error"]("This quantity is not available");
-                            element.quantity = response.data;
-                        }
-                    });
-                });
-
                 let total = 0;
                 this.carts.forEach((cart) => {
                     total += cart.total_price;
                 });
                 return parseFloat((total).toFixed(2));
+
             },
 
             grandTotalotalCartsValue(){

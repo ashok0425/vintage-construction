@@ -5771,30 +5771,22 @@ __webpack_require__.r(__webpack_exports__);
     addToCart: function addToCart(product_id) {
       var _this2 = this;
 
-      axios.get('../../vue/api/product-available-stock-qty-without-invoice/' + product_id + '/' + this.sell.id).then(function (response) {
-        if (response.data > 0) {
-          if (_this2.isAlreadyInCart(product_id)) {
-            _this2.carts.forEach(function (cart) {
-              if (cart.id == product_id) {
-                cart.quantity = cart.quantity + 1;
-              }
-            });
-          } else {
-            _this2.products.forEach(function (product) {
-              if (product.id == product_id) {
-                _this2.product = product;
-                _this2.product.quantity = 1;
-
-                _this2.carts.unshift(_this2.product);
-              }
-            });
+      if (this.isAlreadyInCart(product_id)) {
+        this.carts.forEach(function (cart) {
+          if (cart.id == product_id) {
+            cart.quantity = cart.quantity + 1;
           }
-        } else {
-          toastr["error"]("Stock Out");
-        }
+        });
+      } else {
+        this.products.forEach(function (product) {
+          if (product.id == product_id) {
+            _this2.product = product;
+            _this2.product.quantity = 1;
 
-        ;
-      });
+            _this2.carts.unshift(_this2.product);
+          }
+        });
+      }
     },
     isAlreadyInCart: function isAlreadyInCart(product_id) {
       var result = false;
@@ -5935,7 +5927,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.customer != null) {
         return true;
       } else {
-        alert('Please select a Customer');
+        alert('Please select a site');
         return false;
       }
     },
@@ -5952,22 +5944,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     subTotalotalCartsValue: function subTotalotalCartsValue() {
-      var _this6 = this;
-
-      this.carts.forEach(function (element, key) {
-        axios.get('../../vue/api/product-available-stock-qty-without-invoice/' + element.id + '/' + _this6.sell.id).then(function (response) {
-          if (response.data == 0) {
-            _this6.carts.splice(key, 1);
-          }
-
-          ;
-
-          if (element.quantity > response.data) {
-            toastr["error"]("This quantity is not available");
-            element.quantity = response.data;
-          }
-        });
-      });
       var total = 0;
       this.carts.forEach(function (cart) {
         total += cart.total_price;
@@ -5990,17 +5966,17 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     filteredProduct: function filteredProduct() {
-      var _this7 = this;
+      var _this6 = this;
 
       if (this.filter.category_id != '') {
         return this.products.filter(function (product) {
-          return product.category_id == _this7.filter.category_id && (product.sku.toLowerCase().match(_this7.filter.search.toLowerCase()) || product.title.toLowerCase().match(_this7.filter.search.toLowerCase()));
+          return product.category_id == _this6.filter.category_id && (product.sku.toLowerCase().match(_this6.filter.search.toLowerCase()) || product.title.toLowerCase().match(_this6.filter.search.toLowerCase()));
         });
       }
 
       if (this.filter.search != '') {
         return this.products.filter(function (product) {
-          return product.title.toLowerCase().match(_this7.filter.search.toLowerCase()) || product.sku.toLowerCase().match(_this7.filter.search.toLowerCase());
+          return product.title.toLowerCase().match(_this6.filter.search.toLowerCase()) || product.sku.toLowerCase().match(_this6.filter.search.toLowerCase());
         });
       }
 
@@ -6008,35 +5984,35 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   beforeMount: function beforeMount() {
-    var _this8 = this;
+    var _this7 = this;
 
     axios.get('../../vue/api/products').then(function (response) {
-      _this8.products = response.data;
+      _this7.products = response.data;
     });
     axios.get('../../vue/api/sell-details/' + this.sell.id).then(function (response) {
-      _this8.sell_details = response.data;
-      _this8.customer = _this8.sell_details.customer;
+      _this7.sell_details = response.data;
+      _this7.customer = _this7.sell_details.customer;
 
-      _this8.sell_details.sell_products.forEach(function (sell_product) {
+      _this7.sell_details.sell_products.forEach(function (sell_product) {
         sell_product.title = sell_product.product.title;
         sell_product.id = sell_product.product.id;
         sell_product.price_type = sell_product.product.price_type;
         sell_product.tax = sell_product.product.tax;
 
-        _this8.carts.push(sell_product);
+        _this7.carts.push(sell_product);
       });
     });
     axios.get('../../vue/api/get-app-configs').then(function (response) {
-      _this8.configs = response.data;
+      _this7.configs = response.data;
     });
     axios.get('../../vue/api/customers').then(function (response) {
-      _this8.customers = response.data;
+      _this7.customers = response.data;
     });
     axios.get('../../vue/api/get-local-lang').then(function (response) {
-      _this8.lang = response.data;
+      _this7.lang = response.data;
     });
     axios.get('../../vue/api/my-branch').then(function (response) {
-      _this8.my_branch = response.data;
+      _this7.my_branch = response.data;
     });
   }
 });
@@ -6690,8 +6666,6 @@ __webpack_require__.r(__webpack_exports__);
             _this2.product.quantity = 1;
 
             _this2.carts.unshift(_this2.product);
-
-            sessionStorage.setItem('carts');
           }
         });
       }
@@ -6807,7 +6781,7 @@ __webpack_require__.r(__webpack_exports__);
           return false;
         }
       } else {
-        toastr["error"]("Please select a Customer");
+        toastr["error"]("Please select a site");
         return false;
       }
     },
@@ -6944,7 +6918,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.customer != null) {
         return true;
       } else {
-        toastr["error"]("Please select a Customer");
+        toastr["error"]("Please select a site");
         return false;
       }
     },
@@ -33343,8 +33317,8 @@ var render = function() {
                     _c("v-select", {
                       attrs: {
                         options: _vm.customers,
-                        label: "name",
-                        placeholder: "Search Customer"
+                        label: "site_name",
+                        placeholder: "Search Construction Site"
                       },
                       model: {
                         value: _vm.customer,
@@ -33358,23 +33332,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-warning btn-sm text-white btn-block",
-                        on: {
-                          click: function($event) {
-                            _vm.createCustomer = true
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-plus" })]
-                    )
-                  ])
-                ])
+                _c("div")
               ])
             ])
           ]),
@@ -33948,7 +33906,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v(_vm._s(_vm.lang.payment))]
+                        [_vm._v("Save Stock")]
                       )
                     ])
                   ]
@@ -34578,10 +34536,7 @@ var render = function() {
                                                   _vm._s(cart.quantity) +
                                                     " " +
                                                     _vm._s(
-                                                      cart.product.unit
-                                                        ? cart.product.unit
-                                                            .title
-                                                        : ""
+                                                      cart.unit ? cart.unit : ""
                                                     )
                                                 )
                                               ]),

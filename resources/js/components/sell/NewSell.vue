@@ -632,7 +632,6 @@ export default {
                         this.product = product;
                         this.product.quantity = 1;
                         this.carts.unshift(this.product);
-                        sessionStorage.setItem('carts')
                     }
                 });
             }
@@ -744,7 +743,7 @@ export default {
                     return false;
                 }
             } else {
-                toastr["error"]("Please select a Customer");
+                toastr["error"]("Please select a site");
                 return false;
             }
 
@@ -881,7 +880,7 @@ export default {
             if (this.customer != null) {
                 return true;
             } else {
-                toastr["error"]("Please select a Customer");
+                toastr["error"]("Please select a site");
                 return false;
             }
         },
