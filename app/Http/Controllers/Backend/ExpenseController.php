@@ -7,6 +7,7 @@ use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Toastr;
 
@@ -33,6 +34,9 @@ class ExpenseController extends Controller
         if ($request->expense_category_id){
             $expenses = $expenses->where('expense_category_id', $request->expense_category_id);
         }
+        if ($request->customer_id){
+            $expenses = $expenses->where('customer_id', $request->customer_id);
+        }
 
         if ($request->start_date != '' || $request->end_date != ''){
             $start_date = $request->start_date ? $request->start_date : Expense::oldest()->pluck('expense_date')->first();
@@ -46,6 +50,8 @@ class ExpenseController extends Controller
         return view('backend.expense.index',[
             'expenses' => $expenses,
             'expense_categories' => Auth::user()->business->expenseCategory()->get(),
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+
         ]);
     }
 
@@ -63,6 +69,7 @@ class ExpenseController extends Controller
 
         return view('backend.expense.create',[
             'expense_categories' => ExpenseCategory::all(),
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
         ]);
     }
 
@@ -121,6 +128,8 @@ class ExpenseController extends Controller
         return view('backend.expense.edit',[
             'expense' => $expenses,
             'expense_categories' => ExpenseCategory::all(),
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+
         ]);
     }
 

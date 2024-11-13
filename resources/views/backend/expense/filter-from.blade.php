@@ -1,10 +1,13 @@
 <form action="{{route('expense.index')}}" method="get">
 
     <div class="row g-3">
-        <div class="col-sm-6 col-lg-4 col-xl">
-            <div class="form-group">
-                <input type="text" name="expense_id" value="{{Request::get('expense_id')}}" class="form-control" placeholder="{{__('pages.expense_id')}}">
-            </div>
+        <div class="col-md-3">
+            <select name="customer_id" class="form-select select2-basic">
+                <option value="">All Site</option>
+                @foreach($customers as $customer)
+                    <option value="{{$customer->id}}" {{Request::get('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->name}}, {{$customer->phone}} </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="col-sm-6 col-lg-4 col-xl">

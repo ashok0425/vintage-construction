@@ -6963,6 +6963,11 @@ __webpack_require__.r(__webpack_exports__);
     subTotalotalCartsValue: function subTotalotalCartsValue() {
       var _this10 = this;
 
+      var total = 0;
+      this.carts.forEach(function (cart) {
+        total += cart.total_price;
+      });
+      return parseFloat(total.toFixed(2));
       this.carts.forEach(function (element, key) {
         axios.get('../vue/api/product-available-stock-qty/' + element.id).then(function (response) {
           if (response.data == 0) {
@@ -6977,11 +6982,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       });
-      var total = 0;
-      this.carts.forEach(function (cart) {
-        total += cart.total_price;
-      });
-      return parseFloat(total.toFixed(2));
     },
     grandTotalotalCartsValue: function grandTotalotalCartsValue() {
       if (this.summary.discount > this.subTotalotalCartsValue) {
@@ -35673,7 +35673,7 @@ var render = function() {
                       attrs: {
                         options: _vm.customers,
                         label: "site_name",
-                        placeholder: "Select Customer"
+                        placeholder: "Select Construction Site"
                       },
                       model: {
                         value: _vm.customer,
@@ -36160,7 +36160,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v(_vm._s(_vm.lang.payment))]
+                        [_vm._v("Add Stock")]
                       )
                     ]),
                     _vm._v(" "),
@@ -36672,28 +36672,30 @@ var render = function() {
                                 "div",
                                 { staticClass: "d-flex invoice-summary" },
                                 [
-                                  _c("div", { staticClass: "col-6" }, [
-                                    _c("div", { staticClass: "mb-2" }, [
-                                      _c("span", [
-                                        _vm._v(
-                                          _vm._s(_vm.lang.customer_name) +
-                                            ": " +
-                                            _vm._s(_vm.customer.name) +
-                                            " "
-                                        )
+                                  _vm.customer
+                                    ? _c("div", { staticClass: "col-6" }, [
+                                        _c("div", { staticClass: "mb-2" }, [
+                                          _c("span", [
+                                            _vm._v(
+                                              _vm._s(_vm.lang.customer_name) +
+                                                ": " +
+                                                _vm._s(_vm.customer.name) +
+                                                " "
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", [
+                                          _c("span", [
+                                            _vm._v(
+                                              _vm._s(_vm.lang.customer_phone) +
+                                                ": " +
+                                                _vm._s(_vm.customer.phone)
+                                            )
+                                          ])
+                                        ])
                                       ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", [
-                                      _c("span", [
-                                        _vm._v(
-                                          _vm._s(_vm.lang.customer_phone) +
-                                            ": " +
-                                            _vm._s(_vm.customer.phone)
-                                        )
-                                      ])
-                                    ])
-                                  ]),
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "div",
@@ -52861,8 +52863,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\maasaktidudhdaity\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\maasaktidudhdaity\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\laravel\vintage\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\laravel\vintage\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

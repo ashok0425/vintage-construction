@@ -7,6 +7,7 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -129,8 +130,12 @@ class StockReportController extends Controller
 
     public function ledger(Request $request){
         $purchases=Auth::user()->business->purchase;
-        $sells=Auth::user()->business->sell;
-        $expenses=Auth::user()->business->expense;
+        $sells=Auth::user()->business->sell()->when($request->customer_id,function($query) use ($request){
+             $query->where('customer_id', $request->customer_id);
+        })->get();
+        $expenses=Auth::user()->business->expense()->when($request->customer_id,function($query) use ($request){
+            $query->where('customer_id', $request->customer_id);
+       })->get();
         $purchaseArray = $purchases->map(function($purchase) {
             return [
                 'id' => $purchase->id,
@@ -149,7 +154,7 @@ class StockReportController extends Controller
                 'debit' => $sell->grand_total_price,
                 'credit'=>null,
                 'type' => 'Sell',
-                'remark'=>'Being product sell'
+                'remark'=>'Being product added to site'
             ];
         })->toArray();
 
@@ -183,8 +188,10 @@ class StockReportController extends Controller
             })->values();
         }
         $ledgers=$ledgers->toArray();
-
-       return view('backend.report.ledger',compact('ledgers'));
+        $customers= Customer::where('business_id',Auth::user()->business_id)->get();
+       return view('backend.report.ledger',compact('ledgers',
+       'customers'
+    ));
 
     }
 

@@ -34,10 +34,9 @@
                         <thead>
                         <tr class="bg-secondary text-white">
                             <th>{{__('pages.sl')}}</th>
-                            <th class="text-center">{{__('pages.expense_id')}}</th>
+                            <th>Site Name</th>
                             <th class="text-center">{{__('pages.expense_date')}}</th>
                             <th class="text-center">{{__('pages.expense_category')}}</th>
-
                             <th class="text-center">{{__('pages.amount')}}</th>
                             <th class="text-center">{{__('pages.action')}}</th>
                         </tr>
@@ -46,7 +45,8 @@
                         @foreach($expenses as $key => $expense)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td class="text-center">{{$expense->expense_id}}</td>
+                                <td>{{$expense->customer->site_name}}</td>
+
                                 <td class="text-center">@formatdate($expense->expense_date)</td>
 
                                 <td class="text-center"> {{$expense->expenseCategory ? $expense->expenseCategory->name : '--'}} </td>

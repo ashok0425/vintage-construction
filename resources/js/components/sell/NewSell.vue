@@ -9,7 +9,7 @@
                             <div class="d-flex gap-2">
                                 <div class="flex-grow-1 select-customer">
                                     <v-select :options="customers" v-model="customer" label="site_name"
-                                        placeholder="Select Customer"></v-select>
+                                        placeholder="Select Construction Site"></v-select>
                                 </div>
                                 <!-- <div>
                                     <div class="form-group">
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="d-flex gap-1 justify-content-end pe-2">
                                     <div><a href="javascript:void(0)" class="btn btn-brand btn-brand-primary btn-sm"
-                                            @click="createPayment()">{{ lang.payment }}</a></div>
+                                            @click="createPayment()">Add Stock</a></div>
                                     <!-- <div><a href="javascript:void(0)" v-on:click="archiveDrafts = true"
                                             class="btn btn-brand btn-brand-secondary btn-sm"><i
                                                 class="fas fa-boxes"></i> {{ drafts.length }} </a></div>
@@ -254,7 +254,7 @@
                                 <div class="mb-3" v-if="carts.length > 0">
                                     <div class="border-bottom border-bottom pb-3 mb-4">
                                         <div class="d-flex invoice-summary">
-                                            <div class="col-6" v-if="">
+                                            <div class="col-6" v-if="customer">
                                                 <div class="mb-2">
                                                     <span>{{ lang.customer_name }}: {{ customer.name }} </span>
                                                 </div>
@@ -901,6 +901,12 @@ export default {
 
     computed: {
         subTotalotalCartsValue() {
+
+            let total = 0;
+            this.carts.forEach((cart) => {
+                total += cart.total_price;
+            });
+            return parseFloat((total).toFixed(2));
             this.carts.forEach((element, key) => {
                 axios.get('../vue/api/product-available-stock-qty/' + element.id).then((response) => {
                     if (response.data == 0) {
@@ -913,11 +919,6 @@ export default {
                 });
             });
 
-            let total = 0;
-            this.carts.forEach((cart) => {
-                total += cart.total_price;
-            });
-            return parseFloat((total).toFixed(2));
         },
 
         grandTotalotalCartsValue() {

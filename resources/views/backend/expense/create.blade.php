@@ -41,6 +41,21 @@
 
 
                         <div class="custom-form-group">
+                            <label for="customer_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
+                            <select name="customer_id" id="expense_category_id" class="form-select select2-basic">
+                                <option value="">Select Site</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{$customer->id}}" {{old('customer') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('customer'))
+                                <div class="error mt-1">{{ $errors->first('customer') }}</div>
+                            @endif
+                        </div>
+
+
+                        <div class="custom-form-group">
                             <label for="amount" class="custom-label">{{__('pages.amount')}} <span class="text-danger">*</span></label>
                             <input type="number" name="amount" step=".1" min="0" id="amount" value="{{old('amount')}}" placeholder="{{__('pages.amount')}}" class="form-control" aria-describedby="emailHelp" required>
                             @if ($errors->has('amount'))

@@ -49,7 +49,7 @@
         <li class="aside-nav-item toggleable-group">
             <a class="aside-nav-link toggler {{ active_if_match('sell') }}" href="javascript:void(0)">
                 <span class="aside-nav-icon"><i class="fas fa-list"></i></span>
-                <span class="aside-nav-text">{{__('pages.manage_sell')}}</span>
+                <span class="aside-nav-text">Manage Stock</span>
                 <span class="aside-nav-dropdown-icon"></span>
             </a>
             <div class="aside-dropdown toggleable-menu {{ active_if_match('sell') }}">
@@ -58,13 +58,13 @@
                         <a class="aside-nav-link {{ active_if_full_match('sell/create') }}" href="{{route('sell.create')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.create_invoice')}}</span></a>
                     @endcan
                     @can('manage_sell_invoice')
-                        <a class="aside-nav-link {{ active_if_full_match('sell') }} {{ active_if_full_match('sell/*/edit') }} {{ active_if_full_match('sell/*') }}" href="{{route('sell.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.sell_invoice')}}</span></a>
+                        <a class="aside-nav-link {{ active_if_full_match('sell') }} {{ active_if_full_match('sell/*/edit') }} {{ active_if_full_match('sell/*') }}" href="{{route('sell.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Stock Invoice</span></a>
                     @endcan
                 </ul>
             </div>
         </li>
     @endcan
-
+{{--
     @canany(['create_purchase_invoice', 'manage_purchase_invoice','manage_requisition'])
         <li class="aside-nav-item toggleable-group">
             <a class="aside-nav-link toggler {{ active_if_match('purchase') }} {{ active_if_match('requisition') }} {{ active_if_match('pending-requisition') }}" href="javascript:void(0)">
@@ -80,15 +80,11 @@
                     @can('manage_purchase_invoice')
                         <a class="aside-nav-link {{ active_if_full_match('purchase') }} {{ active_if_full_match('purchase/*/edit') }} {{ active_if_full_match('purchase/*') }}" href="{{route('purchase.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.purchase_invoices')}}</span></a>
                     @endcan
-                    {{-- @can('manage_requisition')
-                        <a class="aside-nav-link {{ active_if_full_match('requisition/create') }}" href="{{route('requisition.create')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.create_requisition')}}</span></a>
-                        <a class="aside-nav-link {{ active_if_full_match('pending-requisition') }}" href="{{route('pending-requisition')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.pending_requisition')}} ({{pendingRequisition()}})</span></a>
-                        <a class="aside-nav-link {{ active_if_full_match('requisition') }} {{ active_if_full_match('requisition/*/edit') }} {{ active_if_full_match('requisition/*') }} {{ active_if_full_match('requisition-filter') }} " href="{{route('requisition.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.manage_requisition')}}</span></a>
-                    @endcan --}}
+
                 </ul>
             </div>
         </li>
-    @endcan
+    @endcan --}}
 
 
     @canany(['manage_expense', 'manage_expense_category'])
@@ -125,10 +121,10 @@
                     @can('manage_supplier_payment')
                         <a class="aside-nav-link {{ active_if_full_match('payment-to-supplier-filter') }} {{ active_if_full_match('payment-to-supplier') }} {{ active_if_full_match('payment-to-supplier/create') }} {{ active_if_full_match('payment-to-supplier/*/edit') }}" href="{{route('payment-to-supplier.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.payment_to_supplier')}}</span></a>
                     @endcan
-
+{{--
                     @can('manage_customer_payment')
                         <a class="aside-nav-link {{ active_if_full_match('payment-from-customer') }} {{ active_if_full_match('payment-from-customer/create') }} {{ active_if_full_match('payment-from-customer/*/edit') }} {{ active_if_full_match('payment-from-customer-filter') }}" href="{{route('payment-from-customer.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Pending Payment From Construction site</span></a>
-                    @endcan
+                    @endcan --}}
                 </div>
             </div>
         </li>
@@ -200,50 +196,25 @@
         <li class="aside-nav-heading"> {{__('pages.reports')}} </li>
     @endcan
 
-    @can('view_sells_report')
+    {{-- @can('view_sells_report')
         <li class="aside-nav-item toggleable-group {{ active_if_full_match('report/sell/*') }}" >
             <a class="aside-nav-link toggler {{ active_if_match('report/sell/') }}" href="javascript:void(0)">
                 <span class="aside-nav-icon"><i class="fas fa-user-secret"></i></span>
-                <span class="aside-nav-text">{{__('pages.sells_report')}}</span>
+                <span class="aside-nav-text">Stock Report</span>
                 <span class="aside-nav-dropdown-icon"></span>
             </a>
             <div class="aside-dropdown toggleable-menu {{ active_if_match('report/sell/') }}">
                 <div class="aside-submenu">
-                    <a href="{{url('report/sell/summary')}}" class="aside-nav-link {{ active_if_full_match('report/sell/summary') }} {{ active_if_full_match('report/sell/summary-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.sales_summary')}}</span> </a>
-                    <a href="{{url('report/sell/statistics')}}" class="aside-nav-link {{ active_if_full_match('report/sell/statistics') }} {{ active_if_full_match('report/sell/statistics-filter') }}  {{ active_if_full_match('report/sell/statistics/last/*/days') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.sales_statistics')}}</span>  </a>
-                    <a href="{{url('report/sell/product-wise')}}" class="aside-nav-link {{ active_if_full_match('report/sell/product-wise') }} {{ active_if_full_match('report/sell/product-wise-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.product_wise_sales')}}</span>  </a>
-                    <a href="{{url('report/sell/sells')}}" class="aside-nav-link {{ active_if_full_match('report/sell/sells') }} {{ active_if_full_match('report/sell/sells-filter-result') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span><span class="aside-nav-text">{{__('pages.all')}} {{__('pages.sells')}}</span></a>
+                    <a href="{{url('report/sell/summary')}}" class="aside-nav-link {{ active_if_full_match('report/sell/summary') }} {{ active_if_full_match('report/sell/summary-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Stock Summary</span> </a>
+                    <a href="{{url('report/sell/statistics')}}" class="aside-nav-link {{ active_if_full_match('report/sell/statistics') }} {{ active_if_full_match('report/sell/statistics-filter') }}  {{ active_if_full_match('report/sell/statistics/last/*/days') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Stock Statistics</span>  </a>
+                    <a href="{{url('report/sell/product-wise')}}" class="aside-nav-link {{ active_if_full_match('report/sell/product-wise') }} {{ active_if_full_match('report/sell/product-wise-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Product wise Report</span>  </a>
+                    <a href="{{url('report/sell/sells')}}" class="aside-nav-link {{ active_if_full_match('report/sell/sells') }} {{ active_if_full_match('report/sell/sells-filter-result') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span><span class="aside-nav-text">{{__('pages.all')}} All Stock Report</span></a>
                 </div>
             </div>
         </li>
-    @endcan
-
-    @can('view_purchase_report')
-        <li class="aside-nav-item toggleable-group {{ active_if_full_match('report/purchase/*') }}" >
-            <a class="aside-nav-link toggler {{ active_if_match('report/purchase/') }}" href="javascript:void(0)" data-toggle="collapse" data-target="#purchaseReport" aria-expanded="true" aria-controls="salesReport">
-                <span class="aside-nav-icon"><i class="fas fa-user-secret"></i></span>
-                <span class="aside-nav-text">{{__('pages.purchase_reports')}}</span>
-                <span class="aside-nav-dropdown-icon"></span>
-            </a>
-            <div class="aside-dropdown toggleable-menu {{ active_if_match('report/purchase/') }}">
-                <div class="aside-submenu">
-                    <a href="{{url('report/purchase/summary')}}" class="aside-nav-link {{ active_if_full_match('report/purchase/summary') }} {{ active_if_full_match('report/purchase/summary-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span>  <span class="aside-nav-text">{{__('pages.purchase_summary')}}</span> </a>
-                    <a href="{{url('report/purchase/statistics')}}" class="aside-nav-link {{ active_if_full_match('report/purchase/statistics') }} {{ active_if_full_match('report/purchase/statistics-filter') }}  {{ active_if_full_match('report/purchase/statistics/last/*/days') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.purchase_statistics')}}</span>   </a>
-                    <a href="{{url('report/purchase/product-wise')}}" class="aside-nav-link {{ active_if_full_match('report/purchase/product-wise') }} {{ active_if_full_match('report/purchase/product-wise-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span>   <span class="aside-nav-text">{{__('pages.product_wise_purchase')}}</span> </a>
-                    <a href="{{url('report/purchase/purchases')}}" class="aside-nav-link {{ active_if_full_match('report/purchase/purchases') }} {{ active_if_full_match('report/purchase/purchases-filter-result') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.all')}} {{__('pages.purchase')}}</span></a>
-                </div>
-            </div>
-        </li>
-    @endcan
+    @endcan --}}
 
     @can('view_stock')
-        <li class="aside-nav-item">
-            <a class="aside-nav-link {{ active_if_full_match('report/stock-report') }}" href="{{url('report/stock-report')}}">
-                <span class="aside-nav-icon"><i class="fas fa-chart-line"></i></span>
-                <span class="aside-nav-text">{{__('pages.stock_report')}}</span>
-            </a>
-        </li>
-
         <li class="aside-nav-item">
             <a class="aside-nav-link {{ active_if_full_match('report/ledger') }}" href="{{url('report/ledger')}}">
                 <span class="aside-nav-icon"><i class="fas fa-chart-line"></i></span>
@@ -252,7 +223,7 @@
         </li>
     @endcan
 
-
+{{--
     @can('view_profit_loss')
         <li class="aside-nav-item">
             <a class="aside-nav-link {{ active_if_full_match('report/profit-loss') }}" href="{{route('profitLoss')}}">
@@ -260,7 +231,7 @@
                 <span class="aside-nav-text">{{__('pages.profit_loss_report')}}</span>
             </a>
         </li>
-    @endcan
+    @endcan --}}
 
 
     @can('application_setting')

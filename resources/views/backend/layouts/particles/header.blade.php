@@ -146,27 +146,27 @@
                 @endif
 
 
-                @can('manage_purchase_invoice')
+                {{-- @can('manage_purchase_invoice')
                     <li class="nav-item">
                         <a class="text-nowrap btn btn-soft-primary btn-sm" href="{{route('purchase.index')}}">
                             <i class="fa fa-list me-2"></i>  <span> {{__('pages.purchase_invoices')}} </span>
                         </a>
                     </li>
-                @endcan
-                @can('create_purchase_invoice')
+                @endcan --}}
+                {{-- @can('create_purchase_invoice')
                     <li class="nav-item">
                         <a class="text-nowrap btn btn-soft-primary btn-sm" href="{{route('purchase.create')}}">
                             <i class="fa fa-plus me-2"></i>  <span> {{__('pages.create_purchase')}} </span>
                         </a>
                     </li>
-                @endcan
-                @can('manage_sell_invoice')
+                @endcan --}}
+                {{-- @can('manage_sell_invoice')
                     <li class="nav-item">
                         <a class="text-nowrap btn btn-soft-primary btn-sm" href="{{route('sell.index')}}">
                             <i class="fa fa-list me-2"></i> <span> {{__('pages.sell_invoice')}} </span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
             </ul>
             <ul class="navbar-nav nav-menu py-2 py-lg-0 mb-0 ms-auto">

@@ -23,7 +23,7 @@
                     <div class="col-sm-6 col-md-4 col-lg">
                         <div class="form-group">
                             <select name="customer_id" class="form-select select2-basic">
-                                <option value="">{{__('pages.all_customer')}}</option>
+                                <option value="">All Site</option>
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}" {{Request::get('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->name}}, {{$customer->phone}} </option>
                                 @endforeach
@@ -59,7 +59,7 @@
                         <tr class="bg-secondary text-white">
                             <th>{{__('pages.sl')}}</th>
                             <th>{{__('pages.invoice_id')}}</th>
-                            <th>{{__('pages.customer')}}</th>
+                            <th>Site Name</th>
                             <th>{{__('pages.sell_date')}}</th>
                             <th>{{__('pages.sub_total')}}</th>
                             <th>{{__('pages.discount')}}</th>
@@ -74,7 +74,7 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$sell->invoice_id}}</td>
-                                <td>{{$sell->customer->name}}</td>
+                                <td>{{$sell->customer->site_name}}</td>
                                 <td> @formatdate($sell->sell_date) </td>
                                 <td> {{get_option('app_currency')}}{{number_format($sell->sub_total, 2)}} </td>
                                 <td> {{get_option('app_currency')}}{{number_format($sell->discount, 2)}} </td>

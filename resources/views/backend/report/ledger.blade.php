@@ -16,21 +16,28 @@
                         <form action="{{url('report/ledger')}}" method="get">
                             <div class="">
                                 <div class="row align-items-center">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group text-left">
                                             <input type="text" name="month" data-date-format="yyyy-M"  value="{{Request::get('month')}}"  placeholder="{{__('pages.select_month')}}" id="datepicker" class="form-control" autocomplete="off">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <input type="text" name="year" data-date-format="yyyy"  value="{{Request::get('year')}}"  placeholder="{{__('pages.select_year')}}" id="yearPicker" class="form-control" autocomplete="off">
                                     </div>
-
                                     <div class="col-md-3">
+                                        <select name="customer_id" class="form-select select2-basic">
+                                            <option value="">All Site</option>
+                                            @foreach($customers as $customer)
+                                                <option value="{{$customer->id}}" {{Request::get('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->name}}, {{$customer->phone}} </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
                                        <select name="type" id="" class="form-select">
                                         <option value="">All</option>
-                                        <option value="Purchase">Purchase</option>
-                                        <option value="Sell">Sell</option>
-                                        <option value="Expense">Expense</option>
+                                        {{-- <option value="Purchase">Purchase</option> --}}
+                                        <option value="Sell" {{Request::get('type') == 'Sell' ? 'selected' : ''}}>Stock</option>
+                                        <option value="Expense" {{Request::get('type') == 'Expense' ? 'selected' : ''}}>Expense</option>
 
                                        </select>
                                     </div>

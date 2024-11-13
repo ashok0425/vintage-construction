@@ -53,7 +53,7 @@ class SellController extends Controller
 
         return view('backend.sell.index', [
             'sells' => $sells,
-            'customers' => Customer::all(),
+            'customers' => Customer::where('business_id',Auth::user()->business_id)->get(),
         ]);
     }
 
