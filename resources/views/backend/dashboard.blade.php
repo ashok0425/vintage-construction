@@ -5,7 +5,7 @@
         {{--========= Summary =============--}}
         <div class="mb-4">
             <div class="row g-4">
-                <div class="col-xl-3 col-md-6">
+                <div class="6 col-md-6">
                     <div class="summary-card">
                         <div class="me-3">
                             <h6 class="summary-card-title">Purchase of the month</h6>
@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6">
+                <div class="6 col-md-6">
                     <div class="summary-card">
                         <div class="me-3">
                             <h6 class="summary-card-title">Total purchase</h6>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12">
+                <div class="col-md-12 col-12">
                     <div class="wiz-card">
                         <div class="wiz-card-header align-items-center">
                             <h5 class="wiz-card-title">Purchase Summary Of last month</h5>
