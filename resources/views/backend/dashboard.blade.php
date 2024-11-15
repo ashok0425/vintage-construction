@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         {{--========= Summary =============--}}
-        <div class="mb-4">
+        {{-- <div class="mb-4">
             <div class="row g-4">
                 <div class="col-xl-3 col-md-6">
                     <div class="summary-card">
@@ -50,10 +50,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Content Row -->
-        <div class="row g-4">
+        {{-- <div class="row g-4">
             <!-- Area Chart -->
             <div class="col-md-6 col-12">
                 <div class="wiz-card">
@@ -180,7 +180,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
     </div>
     <!-- /.container-fluid -->
