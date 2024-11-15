@@ -3,12 +3,12 @@
 @section('content')
     <div class="container-fluid">
         {{--========= Summary =============--}}
-        {{-- <div class="mb-4">
+        <div class="mb-4">
             <div class="row g-4">
                 <div class="col-xl-3 col-md-6">
                     <div class="summary-card">
                         <div class="me-3">
-                            <h6 class="summary-card-title">{{__('pages.sales_of_month')}}</h6>
+                            <h6 class="summary-card-title">Purchase of the month</h6>
                             <h3 class="summary-card-value" id="sell_of_this_month"><img src="{{asset('backend/img/loading.gif')}}" class="img-responsive" height="20"></h3>
                         </div>
                         <div>
@@ -19,7 +19,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="summary-card">
                         <div class="me-3">
-                            <h6 class="summary-card-title">{{__('pages.total_sales_amount')}}</h6>
+                            <h6 class="summary-card-title">Total purchase</h6>
                             <h3 class="summary-card-value" id="total_sell"><img src="{{asset('backend/img/loading.gif')}}" class="img-responsive" height="20"></h3>
                         </div>
                         <div>
@@ -27,30 +27,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="summary-card">
-                        <div class="me-3">
-                            <h6 class="summary-card-title">{{__('pages.purchase_of_month')}}</h6>
-                            <h3 class="summary-card-value" id="purchase_of_this_month"><img src="{{asset('backend/img/loading.gif')}}" class="img-responsive" height="20"></h3>
+                <div class="col-md-6 col-12">
+                    <div class="wiz-card">
+                        <div class="wiz-card-header align-items-center">
+                            <h5 class="wiz-card-title">Purchase Summary Of last month</h5>
+                            <div>
+                                <select class="form-select form-select-sm small text-brand-dark">
+                                    <option>This Month</option>
+                                    <option>This Year</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <span class="summary-card-icon btn-soft-warning"><i class="bi bi-credit-card"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="summary-card">
-                        <div class="me-3">
-                            <h6 class="summary-card-title">{{__('pages.total_purchase_amount')}}</h6>
-                            <h3 class="summary-card-value" id="total_purchase"><img src="{{asset('backend/img/loading.gif')}}" class="img-responsive" height="20"></h3>
-                        </div>
-                        <div>
-                            <span class="summary-card-icon btn-soft-danger"><i class="bi bi-basket"></i></span>
+                        <div class="wiz-card-body">
+                            <div class="ratio ratio-16x9">
+                                <div>
+                                    <canvas id="myAreaChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         <!-- Content Row -->
         {{-- <div class="row g-4">
