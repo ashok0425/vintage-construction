@@ -5,6 +5,17 @@
                 <input type="text" name="invoice_id" placeholder="{{__('pages.invoice_id')}}" class="form-control">
             </div>
         </div>
+
+        <div class="col-sm-6 col-md-4 col-lg">
+            <div class="form-group">
+                <select name="customer_id" class="form-select select2-basic">
+                    <option value="">All Site</option>
+                    @foreach($customers as $customer)
+                        <option value="{{$customer->id}}" {{Request::get('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}, {{$customer->phone}} </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
         <div class="col-sm-6 col-md-4 col-lg">
             <div class="form-group">
                 <select name="supplier_id" class="form-control select2-basic">

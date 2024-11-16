@@ -9,6 +9,7 @@ use App\Models\PurchaseProduct;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Sell;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -42,6 +43,9 @@ class PurchaseController extends Controller
         if ($request->invoice_id){
             $purchases = $purchases->where('invoice_id', 'like', '%'.$request->invoice_id.'%');
         }
+        if ($request->customer_id){
+            $purchases = $purchases->where('customer_id', $request->customer_id);
+        }
 
         $purchases = $purchases->paginate(50);
 
@@ -49,6 +53,8 @@ class PurchaseController extends Controller
         return view('backend.purchase.index',[
             'purchases' => $purchases,
             'suppliers' => Auth::user()->business->supplier,
+            'customers' => Customer::where('business_id',Auth::user()->business_id)->get(),
+
         ]);
     }
 
