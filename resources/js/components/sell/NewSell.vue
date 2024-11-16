@@ -8,15 +8,24 @@
                         <div class="wiz-box p-2">
                             <div class="d-flex gap-2">
                                 <div class="flex-grow-1 select-customer">
+                                    <label for="">Construction Site</label>
+
                                     <v-select :options="customers" v-model="customer" label="site_name"
                                         placeholder="Select Construction Site"></v-select>
                                 </div>
-                                <!-- <div>
-                                    <div class="form-group">
-                                        <button class="btn btn-brand-secondary btn-sm btn-brand" @click="newCustomer()">
-                                            <i class="fa fa-plus"></i> </button>
-                                    </div>
-                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sell-card-header pb-2 mb-2">
+                        <div class="wiz-box p-2">
+                            <div class="d-flex gap-2">
+
+                                <div class="flex-grow-1 select-customer">
+                                    <label for="">Supplier</label>
+                                    <v-select :options="suppliers" v-model="supplier" label="name"
+                                        placeholder="Select Supplier"></v-select>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -568,7 +577,9 @@ export default {
             categories: this.all_categories,
             category: {},
             customers: [],
+            suppliers: [],
             customer: null,
+            supplier: null,
             configs: [],
             my_branch: [],
             drafts: [],
@@ -877,7 +888,7 @@ export default {
         },
 
         sellStoreValidation: function () {
-            if (this.customer != null) {
+            if (this.customer != null&&this.supplier != null) {
                 return true;
             } else {
                 toastr["error"]("Please select a site");
@@ -986,6 +997,10 @@ export default {
         axios.get('../vue/api/get-app-configs').then((response) => {
             this.configs = response.data;
         });
+        axios.get('../vue/api/supplier').then((response) => {
+            this.suppliers = response.data;
+        });
+
 
         axios.get('../vue/api/customers').then((response) => {
             this.customers = response.data;

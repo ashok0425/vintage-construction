@@ -25,7 +25,7 @@ class CustomerController extends Controller
         } // end permission checking
 
         return view('backend.customer.index',[
-            'customers' => Customer::orderBy('id', 'DESC')->with('sells')->paginate(20)
+            'customers' => Auth::user()->business->customer()->orderBy('id', 'DESC')->with('sells')->paginate(20)
         ]);
     }
 

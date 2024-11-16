@@ -3689,6 +3689,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewPurchase",
   mounted: function mounted() {
@@ -3703,6 +3708,8 @@ __webpack_require__.r(__webpack_exports__);
       products: [],
       product: {},
       suppliers: [],
+      customers: [],
+      customer: null,
       supplier: Object,
       categories: [],
       brands: [],
@@ -3795,6 +3802,13 @@ __webpack_require__.r(__webpack_exports__);
     submitPurchase: function submitPurchase() {
       var _this4 = this;
 
+      console.log(this.customer);
+
+      if (this.customer == null) {
+        toastr.error('Please Select Construction Site');
+        return false;
+      }
+
       if (Object.keys(this.supplier).length === 0) {
         this.setSupplier = true;
       } else {
@@ -3802,6 +3816,7 @@ __webpack_require__.r(__webpack_exports__);
           this.isPurchaseStoreProcessing = true;
           axios.post('../purchase', {
             carts: JSON.parse(JSON.stringify(this.carts)),
+            customer: JSON.parse(JSON.stringify(this.customer)),
             supplier: JSON.parse(JSON.stringify(this.supplier)),
             summary: JSON.parse(JSON.stringify(this.summary))
           }).then(function (response) {
@@ -3917,6 +3932,9 @@ __webpack_require__.r(__webpack_exports__);
     });
     axios.get('../vue/api/suppliers').then(function (response) {
       _this7.suppliers = response.data;
+    });
+    axios.get('../vue/api/customers').then(function (response) {
+      _this7.customers = response.data;
     }); // axios.get('../vue/api/my-branch').then((response) => {
     // this.my_branch = response.data;
     // });
@@ -6577,6 +6595,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var ps = new PerfectScrollbar('.perfect-ps');
@@ -6599,7 +6626,9 @@ __webpack_require__.r(__webpack_exports__);
       categories: this.all_categories,
       category: {},
       customers: [],
+      suppliers: [],
       customer: null,
+      supplier: null,
       configs: [],
       my_branch: [],
       drafts: [],
@@ -6915,7 +6944,7 @@ __webpack_require__.r(__webpack_exports__);
       return result;
     },
     sellStoreValidation: function sellStoreValidation() {
-      if (this.customer != null) {
+      if (this.customer != null && this.supplier != null) {
         return true;
       } else {
         toastr["error"]("Please select a site");
@@ -7018,6 +7047,9 @@ __webpack_require__.r(__webpack_exports__);
     });
     axios.get('../vue/api/get-app-configs').then(function (response) {
       _this13.configs = response.data;
+    });
+    axios.get('../vue/api/supplier').then(function (response) {
+      _this13.suppliers = response.data;
     });
     axios.get('../vue/api/customers').then(function (response) {
       _this13.customers = response.data;
@@ -29893,6 +29925,28 @@ var render = function() {
     _c("div", { staticClass: "row p-1" }, [
       _c("div", { staticClass: "col-lg-4 purchase-products" }, [
         _c("div", { staticClass: "wiz-card sell-card-group" }, [
+          _c(
+            "div",
+            { staticClass: "select-customer px-4 py-2" },
+            [
+              _c("v-select", {
+                attrs: {
+                  options: _vm.customers,
+                  label: "site_name",
+                  placeholder: "Select Construction Site"
+                },
+                model: {
+                  value: _vm.customer,
+                  callback: function($$v) {
+                    _vm.customer = $$v
+                  },
+                  expression: "customer"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "wiz-card-header py-2" }, [
             _c("h6", { staticClass: "wiz-card-title" }, [
               _vm._v(_vm._s(_vm.lang.purchase_products))
@@ -35624,6 +35678,10 @@ var render = function() {
                   "div",
                   { staticClass: "flex-grow-1 select-customer" },
                   [
+                    _c("label", { attrs: { for: "" } }, [
+                      _vm._v("Construction Site")
+                    ]),
+                    _vm._v(" "),
                     _c("v-select", {
                       attrs: {
                         options: _vm.customers,
@@ -35636,6 +35694,36 @@ var render = function() {
                           _vm.customer = $$v
                         },
                         expression: "customer"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "sell-card-header pb-2 mb-2" }, [
+            _c("div", { staticClass: "wiz-box p-2" }, [
+              _c("div", { staticClass: "d-flex gap-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "flex-grow-1 select-customer" },
+                  [
+                    _c("label", { attrs: { for: "" } }, [_vm._v("Supplier")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        options: _vm.suppliers,
+                        label: "name",
+                        placeholder: "Select Supplier"
+                      },
+                      model: {
+                        value: _vm.supplier,
+                        callback: function($$v) {
+                          _vm.supplier = $$v
+                        },
+                        expression: "supplier"
                       }
                     })
                   ],

@@ -22,10 +22,6 @@
                             <th class="text-center">{{__('pages.name')}}</th>
                             <th class="text-center">{{__('pages.phone_number')}}</th>
                             <th class="text-center">{{__('pages.email')}}</th>
-                            <th class="text-center">{{__('pages.sell')}}</th>
-                            <th class="text-center">{{__('pages.paid')}}</th>
-                            <th class="text-center">{{__('pages.due')}}</th>
-
                             <th class="text-center">{{__('pages.action')}}</th>
                         </tr>
                         </thead>
@@ -37,10 +33,6 @@
                                 <td class="text-center">{{$customer->name}}</td>
                                 <td class="text-center">{{$customer->phone}}</td>
                                 <td class="text-center">{{$customer->email}}</td>
-                                <td class="text-center"> {{number_format($customer->sells->sum('grand_total_price'),2)}}</td>
-                                <td class="text-center">{{number_format($customer->sells->sum('paid_amount'),2)}}</td>
-                                <td class="text-center"> {{number_format($customer->sells->sum('due_amount'),2)}}</td>
-
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                         <a href="{{route('customer.edit', [$customer->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>

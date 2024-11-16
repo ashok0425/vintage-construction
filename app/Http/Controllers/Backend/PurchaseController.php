@@ -81,6 +81,7 @@ class PurchaseController extends Controller
 
         $purchase = new Purchase();
         $purchase->supplier_id = $request->supplier['id'];
+        $purchase->customer_id = $request->customer['id'];
         $purchase->total_amount = $request->summary['total_amount'];
         $purchase->paid_amount = $request->summary['paid_amount'];
         $purchase->due_amount = $request->summary['due_amount'];

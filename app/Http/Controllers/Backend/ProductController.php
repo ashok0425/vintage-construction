@@ -47,7 +47,7 @@ class ProductController extends Controller
 
         $products = $products->with('unit')->paginate(24);
 
-        $categories = Category::select('id', 'title')->get();
+        $categories = Auth::user()->business->category()->select('id', 'title')->get();
 
         return view ('backend.product.index', [
             'products' => $products,
@@ -98,8 +98,9 @@ class ProductController extends Controller
         ]);
 
         $product = new Product();
-        $request['business_id']=Auth::user()->business_id;
         $product->fill($request->all());
+        $product->business_id=Auth::user()->business_id;
+        $product->sell_price=1;
         if($request->hasFile('thumbnail')){
             $product->thumbnail = $request->thumbnail->move('uploads/product/', Str::random(40) . '.' . $request->thumbnail->extension());
         }
@@ -164,6 +165,8 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
         $product->fill($request->all());
+        $request['sell_price']=1;
+
         if($request->hasFile('thumbnail')){
             $product->thumbnail = $request->thumbnail->move('uploads/product/', Str::random(40) . '.' . $request->thumbnail->extension());
         }

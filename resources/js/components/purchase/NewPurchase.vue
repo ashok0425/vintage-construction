@@ -2,7 +2,12 @@
     <div class="container-fluid pl-2 pr-2">
         <div class="row p-1">
             <div class="col-lg-4 purchase-products">
+
                 <div class="wiz-card sell-card-group">
+                    <div class="select-customer px-4 py-2">
+                                    <v-select :options="customers" v-model="customer" label="site_name"
+                                        placeholder="Select Construction Site"></v-select>
+                                </div>
                     <div class="wiz-card-header py-2">
                         <h6 class="wiz-card-title">{{lang.purchase_products}}</h6>
                         <a href="javascript:void(0)" @click="chooseSupplier()" v-if="chooseSupplierBtn" class="btn btn-brand-secondary btn-brand btn-sm">{{lang.select_supplier}}</a>
@@ -317,6 +322,8 @@
                 products: [],
                 product: {},
                 suppliers: [],
+                customers: [],
+                customer: null,
                 supplier: Object,
                 categories: [],
                 brands: [],
@@ -409,13 +416,18 @@
             },
 
             submitPurchase:function(){
+                console.log(this.customer);
+                if (this.customer==null) {
+                    toastr.error('Please Select Construction Site')
+                    return false;
+                }
                 if (Object.keys(this.supplier).length === 0){
                     this.setSupplier = true;
                 }else{
                     if (this.carts.length != 0) {
                         this.isPurchaseStoreProcessing = true;
 
-                        axios.post('../purchase', {carts: JSON.parse(JSON.stringify(this.carts)), supplier: JSON.parse(JSON.stringify(this.supplier)), summary: JSON.parse(JSON.stringify(this.summary))}).then((response) => {
+                        axios.post('../purchase', {carts: JSON.parse(JSON.stringify(this.carts)), customer: JSON.parse(JSON.stringify(this.customer)),supplier: JSON.parse(JSON.stringify(this.supplier)), summary: JSON.parse(JSON.stringify(this.summary))}).then((response) => {
                             this.isPurchaseStoreProcessing = false;
                             this.clearAll();
                             this.supplier = Object;
@@ -537,6 +549,9 @@
 
             axios.get('../vue/api/suppliers').then((response) => {
                 this.suppliers = response.data;
+            });
+            axios.get('../vue/api/customers').then((response) => {
+                this.customers = response.data;
             });
 
             // axios.get('../vue/api/my-branch').then((response) => {
