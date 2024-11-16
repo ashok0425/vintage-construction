@@ -169,7 +169,7 @@ class StockReportController extends Controller
                 'remark'=>$expense->expenseCategory?->name.':'.$expense->note
             ];
         })->toArray();
-        $ledgers=collect(array_merge($purchaseArray,$salesArray,$expensesArray))
+        $ledgers=collect(array_merge($purchaseArray,$expensesArray))
         ->sortByDesc('date')
         ->values();
         if ($request->type) {

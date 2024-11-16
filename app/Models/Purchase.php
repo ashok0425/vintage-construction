@@ -26,6 +26,11 @@ class Purchase extends Model
         return $this->hasMany(PurchaseProduct::class)->with('product');
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
 
     protected static function boot()
     {

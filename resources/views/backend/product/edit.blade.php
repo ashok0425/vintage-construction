@@ -88,7 +88,7 @@
                             </div>
                         </div> --}}
 
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3">
                             <div class="form-group">
                                 <label for="price_type" class="custom-label">{{__('pages.sell_price_type')}} <span class="text-danger">*</span></label>
                                 <select name="price_type" id="price_type" class="form-control select2">
@@ -100,7 +100,7 @@
                                     <div class="error">{{ $errors->first('price_type') }}</div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-3">
                             <div class="form-group">

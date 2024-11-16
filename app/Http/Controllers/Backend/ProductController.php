@@ -101,6 +101,8 @@ class ProductController extends Controller
         $product->fill($request->all());
         $product->business_id=Auth::user()->business_id;
         $product->sell_price=1;
+        $product->price_type=0;
+
         if($request->hasFile('thumbnail')){
             $product->thumbnail = $request->thumbnail->move('uploads/product/', Str::random(40) . '.' . $request->thumbnail->extension());
         }
@@ -166,7 +168,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->fill($request->all());
         $request['sell_price']=1;
-
+        $product->price_type=0;
         if($request->hasFile('thumbnail')){
             $product->thumbnail = $request->thumbnail->move('uploads/product/', Str::random(40) . '.' . $request->thumbnail->extension());
         }

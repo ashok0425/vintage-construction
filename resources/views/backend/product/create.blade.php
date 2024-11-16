@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                {{-- <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="purchase_price" class="custom-label">{{__('pages.purchase_price')}} <span class="text-danger">*</span></label>
                                         <input type="number" step=".01"  name="purchase_price" min="0" id="purchase_price" value="{{old('purchase_price')}}" placeholder="{{__('pages.purchase_price')}}" class="form-control">
@@ -79,7 +79,7 @@
                                             <div class="error">{{ $errors->first('purchase_price') }}</div>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 

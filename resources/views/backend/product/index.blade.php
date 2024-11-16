@@ -61,21 +61,20 @@
                                         <span class="text-brand-muted me-2"> {{__('pages.purchase')}} :</span>
                                         <span>{{get_option('app_currency')}}{{$product->purchase_price}}</span>
                                     </div>
-                                    <div class="d-flex justify-content-center">
+                                    {{-- <div class="d-flex justify-content-center">
                                         <span class="text-brand-muted me-2"> {{__('pages.sell')}}:</span>
                                         <span>{{get_option('app_currency')}}{{$product->sell_price}}</span>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="d-flex justify-content-center">
+                                    {{-- <div class="d-flex justify-content-center">
                                         <span class="text-brand-muted me-2">{{__('pages.stock_quantity')}}:</span>
                                         <span> {{$product->current_stock_quantity ?? 0}} {{$product->unit->title ?? ''}}</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <ul class="list-inline text-center mt-3">
                                     <li class="list-inline-item"><a href="{{route('product.edit', [$product->id])}}"><i class="bi bi-pencil-square"></i></a></li>
-                                    <li class="list-inline-item"><a href="{{route('product.show', [$product->id])}}" class="text-brand-muted"><i class="bi bi-eye"></i></a></li>
-                                    <li class="list-inline-item"><a href="javascript:void(0)" class="download-bar-code" data-id="{{$product->id}}"><i class="fa fa-barcode text-secondary" aria-hidden="true"></i></a></li>
+                                    {{-- <li class="list-inline-item"><a href="{{route('product.show', [$product->id])}}" class="text-brand-muted"><i class="bi bi-eye"></i></a></li> --}}
                                     <li class="list-inline-item">
                                         <a href="javascript:void(0);" onclick="$(this).confirmDelete($('#delete-{{$key}}'))" class="text-danger"><i class="bi bi-trash3"></i></a>
                                         <form action="{{ route('product.destroy',$product->id) }}" method="post" id="delete-{{$key}}"> @csrf @method('delete') </form>

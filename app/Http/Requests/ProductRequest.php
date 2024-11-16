@@ -30,7 +30,7 @@ class ProductRequest extends FormRequest
             'purchase_price' => 'required|numeric|min:0',
             'sell_price' => 'nullable|numeric|min:0',
             'tax_id' => 'required|numeric',
-            'price_type' => 'required|numeric',
+            'price_type' => 'nullable|numeric',
             'sku' => 'required',
         ];
 

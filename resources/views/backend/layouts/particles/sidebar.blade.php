@@ -44,7 +44,7 @@
             </div>
         </li>
     @endcanany
-
+{{--
     @canany(['manage_sell_invoice'])
         <li class="aside-nav-item toggleable-group">
             <a class="aside-nav-link toggler {{ active_if_match('sell') }}" href="javascript:void(0)">
@@ -63,8 +63,8 @@
                 </ul>
             </div>
         </li>
-    @endcan
-{{--
+    @endcan --}}
+
     @canany(['create_purchase_invoice', 'manage_purchase_invoice','manage_requisition'])
         <li class="aside-nav-item toggleable-group">
             <a class="aside-nav-link toggler {{ active_if_match('purchase') }} {{ active_if_match('requisition') }} {{ active_if_match('pending-requisition') }}" href="javascript:void(0)">
@@ -84,7 +84,7 @@
                 </ul>
             </div>
         </li>
-    @endcan --}}
+    @endcan
 
 
     @canany(['manage_expense', 'manage_expense_category'])

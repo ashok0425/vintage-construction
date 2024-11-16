@@ -36,7 +36,7 @@
                                        <select name="type" id="" class="form-select">
                                         <option value="">All</option>
                                         {{-- <option value="Purchase">Purchase</option> --}}
-                                        <option value="Sell" {{Request::get('type') == 'Sell' ? 'selected' : ''}}>Stock</option>
+                                        <option value="Purchase" {{Request::get('type') == 'Purchase' ? 'selected' : ''}}>Purchase</option>
                                         <option value="Expense" {{Request::get('type') == 'Expense' ? 'selected' : ''}}>Expense</option>
 
                                        </select>
