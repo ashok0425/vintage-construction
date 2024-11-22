@@ -53,10 +53,18 @@ class HomeController extends Controller
     public function dashboardSellPurchaseData(){
 
             $business_id = Auth::user()->business_id;
-            $sell_of_this_month = Sell::where('business_id', $business_id)->whereMonth('sell_date', Carbon::now()->format('m-Y'))->sum('grand_total_price');
-            $total_sell = Sell::where('business_id', $business_id)->sum('grand_total_price');
-            $purchase_of_this_month = Purchase::where('business_id', $business_id)->whereMonth('purchase_date', Carbon::now()->format('m-Y'))->sum('total_amount');
-            $total_purchase = Purchase::where('business_id', $business_id)->sum('total_amount');
+            $sell_of_this_month = Sell::where('business_id', $business_id)->whereMonth('sell_date', Carbon::now()->format('m-Y'))->when(!Auth::user()->can('do anything'),function($query){
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })->sum('grand_total_price');
+            $total_sell = Sell::where('business_id', $business_id)->when(!Auth::user()->can('do anything'),function($query){
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })->sum('grand_total_price');
+            $purchase_of_this_month = Purchase::where('business_id', $business_id)->whereMonth('purchase_date', Carbon::now()->format('m-Y'))->when(!Auth::user()->can('do anything'),function($query){
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })->sum('total_amount');
+            $total_purchase = Purchase::where('business_id', $business_id)->when(!Auth::user()->can('do anything'),function($query){
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })->sum('total_amount');
 
 
         $data = [];

@@ -129,13 +129,22 @@ class StockReportController extends Controller
 
 
     public function ledger(Request $request){
-        $purchases=Auth::user()->business->purchase;
-        $sells=Auth::user()->business->sell()->when($request->customer_id,function($query) use ($request){
-             $query->where('customer_id', $request->customer_id);
+        $purchases=Auth::user()->business->purchase()->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
         })->get();
-        $expenses=Auth::user()->business->expense()->when($request->customer_id,function($query) use ($request){
+
+        $expenses=Auth::user()->business->expense()->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        })->when($request->customer_id,function($query) use ($request){
             $query->where('customer_id', $request->customer_id);
-       })->get();
+       })->where('type',1)->get();
+
+       $income=Auth::user()->business->expense()->when(!Auth::user()->can('do anything'),function($query){
+        return $query->where('customer_id', Auth::user()->customer_id);
+    })->when($request->customer_id,function($query) use ($request){
+        $query->where('customer_id', $request->customer_id);
+   })->where('type',0)->get();
+
         $purchaseArray = $purchases->map(function($purchase) {
             return [
                 'id' => $purchase->id,
@@ -147,16 +156,7 @@ class StockReportController extends Controller
             ];
         })->toArray();
 
-        $salesArray = $sells->map(function($sell) {
-            return [
-                'id' => $sell->id,
-                'date' => $sell->sell_date,
-                'debit' => $sell->grand_total_price,
-                'credit'=>null,
-                'type' => 'Sell',
-                'remark'=>'Being product added to site'
-            ];
-        })->toArray();
+
 
 
         $expensesArray = $expenses->map(function($expense) {
@@ -169,7 +169,18 @@ class StockReportController extends Controller
                 'remark'=>$expense->expenseCategory?->name.':'.$expense->note
             ];
         })->toArray();
-        $ledgers=collect(array_merge($purchaseArray,$expensesArray))
+
+        $incomeArray = $income->map(function($expense) {
+            return [
+                'id' => $expense->id,
+                'date' => $expense->expense_date,
+                'debit' => $expense->amount,
+                'credit'=>null,
+                'type' => 'Income',
+                'remark'=>$expense->expenseCategory?->name.':'.$expense->note
+            ];
+        })->toArray();
+        $ledgers=collect(array_merge($purchaseArray,$expensesArray,$incomeArray))
         ->sortByDesc('date')
         ->values();
         if ($request->type) {
@@ -188,7 +199,9 @@ class StockReportController extends Controller
             })->values();
         }
         $ledgers=$ledgers->toArray();
-        $customers= Customer::where('business_id',Auth::user()->business_id)->get();
+        $customers= Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get();
        return view('backend.report.ledger',compact('ledgers',
        'customers'
     ));

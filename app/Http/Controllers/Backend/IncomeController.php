@@ -24,7 +24,9 @@ class IncomeController extends Controller
             return redirect('home')->with(denied());
         } // end permission checking
 
-        $expenses = Auth::user()->business->expense()->where('type',0)->orderBY('id', 'DESC');
+        $expenses = Auth::user()->business->expense()->where('type',0)->orderBY('id', 'DESC')->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        });;
 
         if ($request->expense_id){
             $expenses = $expenses->where('expense_id', 'like', '%'.$request->expense_id.'%');
@@ -50,7 +52,9 @@ class IncomeController extends Controller
         return view('backend.income.index',[
             'expenses' => $expenses,
             'expense_categories' => Auth::user()->business->expenseCategory()->where('type',0)->get(),
-           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
 
         ]);
     }
@@ -69,7 +73,9 @@ class IncomeController extends Controller
 
         return view('backend.income.create',[
            'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',0)->get(),
-           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
         ]);
     }
 
@@ -89,6 +95,7 @@ class IncomeController extends Controller
         $expense = new Expense();
         $expense->fill($request->all());
         $expense->type=0;
+        $expense->customer_id = $request->customer_id??Auth::user()->customer_id;
         $expense->business_id = Auth::user()->business_id;
         $expense->save();
 
@@ -129,7 +136,9 @@ class IncomeController extends Controller
         return view('backend.income.edit',[
             'expense' => $expenses,
             'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',0)->get(),
-           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
 
         ]);
     }
@@ -156,6 +165,7 @@ class IncomeController extends Controller
 
         $expense = $expenses;
         $expense->fill($request->all());
+        $expense->customer_id = $request->customer_id??Auth::user()->customer_id;
         $expense->save();
 
         Toastr::success('Expense successfully updated', '', ['progressBar' => true, 'closeButton' => true, 'positionClass' => 'toast-bottom-right']);

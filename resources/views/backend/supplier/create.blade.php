@@ -17,6 +17,24 @@
                     @csrf
 
                     <div class="row g-3">
+                        @can('do anything')
+                        <div class="col-md-6">
+                        <div class="custom-form-group">
+                            <label for="customer_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
+                            <select name="customer_id" id="expense_category_id" class="form-select select2-basic">
+                                <option value="">Select Site</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{$customer->id}}" {{old('customer') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('customer'))
+                                <div class="error mt-1">{{ $errors->first('customer') }}</div>
+                            @endif
+                        </div>
+                        @endcan
+
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="company_name" class="custom-label">{{__('pages.company_name')}} <span class="text-danger">*</span></label>

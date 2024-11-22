@@ -21,6 +21,24 @@
                             @method('patch')
 
                             <div class="row g-3">
+                                @can('do anything')
+                                <div class="col-md-6">
+                                    <div class="custom-form-group">
+                                        <label for="customer_id" class="custom-label">Site <span class="text-danger">*</span></label>
+                                        <select name="customer_id" id="customer_id" class="form-select select2-basic">
+                                            <option value="">Select Site</option>
+                                            @foreach($customers as $customer)
+                                                <option value="{{$customer->id}}" {{old('customer',$supplier->customer_id) == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @if ($errors->has('customer'))
+                                            <div class="error mt-1">{{ $errors->first('customer') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endcan
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="company_name" class="custom-label">{{__('pages.company_name')}}<span class="text-danger">*</span></label>

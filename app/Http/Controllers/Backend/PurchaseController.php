@@ -28,7 +28,10 @@ class PurchaseController extends Controller
             return redirect('home')->with(denied());
         } // end permission checking
 
-        $purchases = Auth::user()->business->purchase()->orderBy('id', 'DESC');
+        $purchases = Auth::user()->business->purchase()->orderBy('id', 'DESC')
+        ->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        });
         if ($request->supplier_id){
             $purchases = $purchases->where('supplier_id', $request->supplier_id);
         }
@@ -53,7 +56,9 @@ class PurchaseController extends Controller
         return view('backend.purchase.index',[
             'purchases' => $purchases,
             'suppliers' => Auth::user()->business->supplier,
-            'customers' => Customer::where('business_id',Auth::user()->business_id)->get(),
+            'customers' => Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+                return $query->where('id', Auth::user()->customer_id);
+            })->get(),
 
         ]);
     }
@@ -87,7 +92,7 @@ class PurchaseController extends Controller
 
         $purchase = new Purchase();
         $purchase->supplier_id = $request->supplier['id'];
-        $purchase->customer_id = $request->customer['id'];
+        $purchase->customer_id = $request->customer['id']??Auth::user()->customer_id;
         $purchase->total_amount = $request->summary['total_amount'];
         $purchase->paid_amount = $request->summary['paid_amount'];
         $purchase->due_amount = $request->summary['due_amount'];
@@ -139,7 +144,7 @@ class PurchaseController extends Controller
             return redirect('home')->with(denied());
         } // end permission checking
 
-        $purchase =Auth::user()->business->purchase()->where('id',$id)->firstOrFail();
+        $purchase =Auth::user()->business->purchase()->where('id',$purchase_id)->firstOrFail();
         if (!Auth::user()->can('access_to_all_branch')) {
             if ($purchase->business_id != Auth::user()->business_id){
                 return redirect()->back()->with(denied());
@@ -199,6 +204,7 @@ class PurchaseController extends Controller
         $purchase->total_amount = $request->summary['total_amount'];
         $purchase->paid_amount = $request->summary['paid_amount'];
         $purchase->due_amount = $request->summary['due_amount'];
+        $purchase->customer_id = $request->customer['id']??Auth::user()->customer_id;
         $purchase->save();
 
         Auth::user()->business->purchaseProduct()->where('purchase_id',$id)->delete();

@@ -19,11 +19,9 @@
                         <thead>
                         <tr class="bg-secondary text-white">
                             <th>{{__('pages.sl')}}</th>
+                            <th>Site</th>
                             <th>{{__('pages.company_name')}}</th>
-                            <th>{{__('pages.contact_person')}}</th>
                             <th>{{__('pages.phone_number')}}</th>
-                            <th>{{__('pages.email')}}</th>
-
                             <th>{{__('pages.purchase')}}</th>
                             <th>{{__('pages.paid')}}</th>
                             <th>{{__('pages.due')}}</th>
@@ -35,10 +33,9 @@
                         @foreach($suppliers as $key => $supplier)
                             <tr>
                                 <td>{{$key+1}}</td>
+                                <td>{{Str::limit($supplier->customer?->site_name??'-',30)}}</td>
                                 <td>{{$supplier->company_name}}</td>
-                                <td>{{$supplier->contact_person}}</td>
                                 <td>{{$supplier->phone}}</td>
-                                <td>{{$supplier->email}}</td>
                                 <td>{{number_format($supplier->purchase->sum('total_amount'),2)}}</td>
                                 <td>{{number_format($supplier->payments->sum('amount'),2)}}</td>
                                 <td>

@@ -20,4 +20,9 @@ class Supplier extends Model
     {
         return $this->hasMany(PaymentToSupplier::class);
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class)->withTrashed();
+    }
 }

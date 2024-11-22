@@ -39,7 +39,7 @@
                             @endif
                         </div>
 
-
+                        @can('do anything')
                         <div class="custom-form-group">
                             <label for="customer_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
                             <select name="customer_id" id="expense_category_id" class="form-select select2-basic">
@@ -53,6 +53,7 @@
                                 <div class="error mt-1">{{ $errors->first('customer') }}</div>
                             @endif
                         </div>
+                        @endcan
 
 
                         <div class="custom-form-group">

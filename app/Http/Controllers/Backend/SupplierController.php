@@ -6,6 +6,7 @@ use App\Http\Requests\SupplierRequest;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Support\Str;
 use Toastr;
 use File;
@@ -26,6 +27,9 @@ class SupplierController extends Controller
 
         return view('backend.supplier.index',[
             'suppliers' => Auth::user()->business->supplier()->orderBy('id', 'DESC')->get()
+            ->when(!Auth::user()->can('do anything'),function($query){
+                return $query->where('customer_id', Auth::user()->customer_id);
+            })
         ]);
     }
 
@@ -41,7 +45,9 @@ class SupplierController extends Controller
         } // end permission checking
 
 
-        return view('backend.supplier.create');
+        return view('backend.supplier.create',[
+            'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+        ]);
     }
 
     /**
@@ -62,6 +68,7 @@ class SupplierController extends Controller
         if($request->hasFile('logo')){
             $supplier->logo = $request->logo->move('uploads/supplier/', Str::random(20) . '.' . $request->logo->extension());;
         }
+        $supplier->customer_id = $request->customer_id??Auth::user()->customer_id;
         $supplier->save();
         Toastr::success('Supplier has been created', '', ['progressBar' => true, 'closeButton' => true, 'positionClass' => 'toast-bottom-right']);
         return redirect()->route('supplier.index');
@@ -79,8 +86,12 @@ class SupplierController extends Controller
             return redirect('home')->with(denied());
         } // end permission checking
 
-        $purchases = Auth::user()->business->purchase()->where('supplier_id', $id)->paginate(50);
-        $supplier = Auth::user()->business->supplier()->where('id',$id)->firstOrFail();
+        $purchases = Auth::user()->business->purchase()->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        })->where('supplier_id', $id)->paginate(50);
+        $supplier = Auth::user()->business->supplier()->where('id',$id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        })->firstOrFail();
         return view('backend.supplier.show',[
             'supplier' => $supplier,
             'purchases' => $purchases,
@@ -101,7 +112,8 @@ class SupplierController extends Controller
 
 
         return view('backend.supplier.edit',[
-            'supplier' => Auth::user()->business->supplier()->where('id',$id)->firstOrFail()
+            'supplier' => Auth::user()->business->supplier()->where('id',$id)->firstOrFail(),
+            'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
         ]);
     }
 
@@ -124,6 +136,7 @@ class SupplierController extends Controller
             File::delete($supplier->logo);
             $supplier->logo = $request->logo->move('uploads/supplier/', Str::random(20) . '.' . $request->logo->extension());;
         }
+        $supplier->customer_id = $request->customer_id??Auth::user()->customer_id;
         $supplier->save();
         Toastr::success('Supplier has been updated', '', ['progressBar' => true, 'closeButton' => true, 'positionClass' => 'toast-bottom-right']);
         return redirect()->back();

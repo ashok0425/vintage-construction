@@ -24,7 +24,10 @@ class ExpenseController extends Controller
             return redirect('home')->with(denied());
         } // end permission checking
 
-        $expenses = Auth::user()->business->expense()->where('type',1)->orderBY('id', 'DESC');
+        $expenses = Auth::user()->business->expense()->where('type',1)->orderBY('id', 'DESC')
+        ->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        });
 
         if ($request->expense_id){
             $expenses = $expenses->where('expense_id', 'like', '%'.$request->expense_id.'%');
@@ -50,7 +53,9 @@ class ExpenseController extends Controller
         return view('backend.expense.index',[
             'expenses' => $expenses,
             'expense_categories' => Auth::user()->business->expenseCategory()->get(),
-           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
 
         ]);
     }
@@ -69,7 +74,9 @@ class ExpenseController extends Controller
 
         return view('backend.expense.create',[
         'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',1)->get(),
-           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
         ]);
     }
 
@@ -89,6 +96,7 @@ class ExpenseController extends Controller
         $expense = new Expense();
         $expense->fill($request->all());
         $expense->business_id = Auth::user()->business_id;
+        $expense->customer_id = $request->customer_id??Auth::user()->customer_id;
         $expense->save();
 
         Toastr::success('Expense successfully saved', '', ['progressBar' => true, 'closeButton' => true, 'positionClass' => 'toast-bottom-right']);
@@ -128,7 +136,9 @@ class ExpenseController extends Controller
         return view('backend.expense.edit',[
             'expense' => $expenses,
             'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',1)->get(),
-           'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
+           'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
 
         ]);
     }
@@ -155,6 +165,7 @@ class ExpenseController extends Controller
 
         $expense = $expenses;
         $expense->fill($request->all());
+        $expense->customer_id = $request->customer_id??Auth::user()->customer_id;
         $expense->save();
 
         Toastr::success('Expense successfully updated', '', ['progressBar' => true, 'closeButton' => true, 'positionClass' => 'toast-bottom-right']);

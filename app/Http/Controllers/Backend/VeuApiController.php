@@ -153,7 +153,10 @@ class VeuApiController extends Controller
     }
 
     public function customers(){
-        $customers = Auth::user()->business->customer()->where('status', 1)->get();
+        $customers = Auth::user()->business->customer()->where('status', 1)
+        ->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get();
         return response($customers);
     }
 
