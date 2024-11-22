@@ -170,7 +170,7 @@
 
             </ul>
             <ul class="navbar-nav nav-menu py-2 py-lg-0 mb-0 ms-auto">
-                @can('create_sell_invoice')
+                @can('create_purchase_invoice')
                 <li class="nav-item">
                     <a class="text-nowrap btn btn-danger btn-sm" href="{{route('purchase.create')}}">
                         <i class="fa fa-print me-2"></i> POS </span>

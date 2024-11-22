@@ -169,9 +169,18 @@
                             </div>
 
                             <div class="col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label for="id_number" class="custom-label"> {{__('pages.employee_id')}} </label>
-                                    <input type="text" name="id_number" value="{{old('id_number')}}" class="form-control" placeholder="{{__('pages.employee_id')}}">
+                                <div class="custom-form-group">
+                                    <label for="customer_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
+                                    <select name="customer_id" id="expense_category_id" class="form-select select2-basic">
+                                        <option value="">Select Site</option>
+                                        @foreach($customers as $customer)
+                                            <option value="{{$customer->id}}" {{old('customer') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @if ($errors->has('customer'))
+                                        <div class="error mt-1">{{ $errors->first('customer') }}</div>
+                                    @endif
                                 </div>
                             </div>
 

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Business;
+use App\Models\Customer;
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -57,6 +58,10 @@ class User extends Authenticatable
 
     public function business(){
         return $this->belongsTo(Business::class);
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class);
     }
 
 }

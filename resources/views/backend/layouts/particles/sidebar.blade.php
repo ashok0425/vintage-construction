@@ -10,10 +10,14 @@
 
 <ul class="aside-nav-menu">
 
+    @can('do anything')
+
     <li class="aside-nav-item">
         <a class="aside-nav-link {{ active_if_full_match('customer') }} {{ active_if_full_match('customer/create') }} {{ active_if_full_match('customer/*/edit') }} {{ active_if_full_match('customer/*') }}" href="{{route('customer.index')}}"><span class="aside-nav-icon"><i class="fas fa-house"></i></span> <span class="aside-nav-text">Construction Site</span></a>
 
     </li>
+    @endcan
+
 
     @canany(['manage_category', 'manage_tax', 'manage_product', 'manage_unit'])
         <li class="aside-nav-heading"> {{__('pages.sells_marketing')}} </li>
@@ -44,26 +48,7 @@
             </div>
         </li>
     @endcanany
-{{--
-    @canany(['manage_sell_invoice'])
-        <li class="aside-nav-item toggleable-group">
-            <a class="aside-nav-link toggler {{ active_if_match('sell') }}" href="javascript:void(0)">
-                <span class="aside-nav-icon"><i class="fas fa-list"></i></span>
-                <span class="aside-nav-text">Manage Stock</span>
-                <span class="aside-nav-dropdown-icon"></span>
-            </a>
-            <div class="aside-dropdown toggleable-menu {{ active_if_match('sell') }}">
-                <ul class="aside-submenu">
-                    @can('create_sell_invoice')
-                        <a class="aside-nav-link {{ active_if_full_match('sell/create') }}" href="{{route('sell.create')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.create_invoice')}}</span></a>
-                    @endcan
-                    @can('manage_sell_invoice')
-                        <a class="aside-nav-link {{ active_if_full_match('sell') }} {{ active_if_full_match('sell/*/edit') }} {{ active_if_full_match('sell/*') }}" href="{{route('sell.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Stock Invoice</span></a>
-                    @endcan
-                </ul>
-            </div>
-        </li>
-    @endcan --}}
+
 
     @canany(['create_purchase_invoice', 'manage_purchase_invoice','manage_requisition'])
         <li class="aside-nav-item toggleable-group">
@@ -217,25 +202,8 @@
         <li class="aside-nav-heading"> {{__('pages.reports')}} </li>
     @endcan
 
-    {{-- @can('view_sells_report')
-        <li class="aside-nav-item toggleable-group {{ active_if_full_match('report/sell/*') }}" >
-            <a class="aside-nav-link toggler {{ active_if_match('report/sell/') }}" href="javascript:void(0)">
-                <span class="aside-nav-icon"><i class="fas fa-user-secret"></i></span>
-                <span class="aside-nav-text">Stock Report</span>
-                <span class="aside-nav-dropdown-icon"></span>
-            </a>
-            <div class="aside-dropdown toggleable-menu {{ active_if_match('report/sell/') }}">
-                <div class="aside-submenu">
-                    <a href="{{url('report/sell/summary')}}" class="aside-nav-link {{ active_if_full_match('report/sell/summary') }} {{ active_if_full_match('report/sell/summary-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Stock Summary</span> </a>
-                    <a href="{{url('report/sell/statistics')}}" class="aside-nav-link {{ active_if_full_match('report/sell/statistics') }} {{ active_if_full_match('report/sell/statistics-filter') }}  {{ active_if_full_match('report/sell/statistics/last/*/days') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Stock Statistics</span>  </a>
-                    <a href="{{url('report/sell/product-wise')}}" class="aside-nav-link {{ active_if_full_match('report/sell/product-wise') }} {{ active_if_full_match('report/sell/product-wise-filter') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Product wise Report</span>  </a>
-                    <a href="{{url('report/sell/sells')}}" class="aside-nav-link {{ active_if_full_match('report/sell/sells') }} {{ active_if_full_match('report/sell/sells-filter-result') }}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span><span class="aside-nav-text">{{__('pages.all')}} All Stock Report</span></a>
-                </div>
-            </div>
-        </li>
-    @endcan --}}
 
-    @can('view_stock')
+    @can('manage_ledger')
         <li class="aside-nav-item">
             <a class="aside-nav-link {{ active_if_full_match('report/ledger') }}" href="{{url('report/ledger')}}">
                 <span class="aside-nav-icon"><i class="fas fa-chart-line"></i></span>
@@ -243,16 +211,6 @@
             </a>
         </li>
     @endcan
-
-{{--
-    @can('view_profit_loss')
-        <li class="aside-nav-item">
-            <a class="aside-nav-link {{ active_if_full_match('report/profit-loss') }}" href="{{route('profitLoss')}}">
-                <span class="aside-nav-icon"><i class="fas fa-chart-line"></i></span>
-                <span class="aside-nav-text">{{__('pages.profit_loss_report')}}</span>
-            </a>
-        </li>
-    @endcan --}}
 
 
     @can('application_setting')
@@ -263,50 +221,5 @@
         </li>
     @endcan
 
-
-    {{-- @can('application_setting')
-        <li class="aside-nav-item">
-            <a class="aside-nav-link" href="{{route('language.index')}}">
-                <span class="aside-nav-icon"><i class="fas fa-globe-europe"></i></span> <span class="aside-nav-text">{{__('pages.language_settings')}}</span>
-            </a>
-        </li>
-    @endcan --}}
-
-    {{-- @can('manage_trash')
-        <li class="aside-nav-item toggleable-group">
-            <a class="aside-nav-link toggler {{ active_if_match('trash/category') }} {{ active_if_match('trash/tax') }} {{ active_if_match('trash/branch') }} {{ active_if_match('trash/designation') }}  {{ active_if_match('trash/department') }} {{ active_if_match('trash/expense-category') }}" href="javascript:void(0)" data-toggle="collapse" data-target="#trash" aria-expanded="true" aria-controls="sells">
-                <span class="aside-nav-icon"><i class="fas fa-trash-restore"></i></span>
-                <span class="aside-nav-text">{{__('pages.trash')}} </span>
-                <span class="aside-nav-dropdown-icon"></span>
-            </a>
-            <div class="aside-dropdown toggleable-menu {{ active_if_match('trash/category') }} {{ active_if_match('trash/tax') }} {{ active_if_match('trash/branch') }} {{ active_if_match('trash/designation') }}  {{ active_if_match('trash/department') }} {{ active_if_match('trash/expense-category') }}">
-                <div class="aside-submenu">
-                    @can('manage_category')
-                        <a class="aside-nav-link {{ active_if_full_match('trash/category') }}" href="{{route('category-trash')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.categories')}}</span></a>
-                    @endcan
-
-                    @can('manage_tax')
-                        <a class="aside-nav-link {{ active_if_full_match('trash/tax') }}" href="{{route('tax-trash')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.taxes')}}</span></a>
-                    @endcan
-
-                    @can('manage_expense_category')
-                        <a class="aside-nav-link {{ active_if_full_match('trash/expense-category') }}" href="{{route('expense-category-trash')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.expense_category')}}</span></a>
-                    @endcan
-
-                    @can('manage_department')
-                        <a class="aside-nav-link {{ active_if_full_match('trash/department-trash') }}" href="{{route('department-trash')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.departments')}}</span> </a>
-                    @endcan
-
-                    @can('manage_designation')
-                        <a class="aside-nav-link {{ active_if_full_match('trash/designation-trash') }}" href="{{route('designation-trash')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.designations')}}</span></a>
-                    @endcan
-
-                    @can('manage_branch')
-                        <a class="aside-nav-link {{ active_if_full_match('trash/branch-trash') }}" href="{{route('branch-trash')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.branch')}}</span></a>
-                    @endcan
-                </div>
-            </div>
-        </li>
-    @endcan --}}
 </ul>
 

@@ -10,6 +10,7 @@ use App\Traits\RedirectControlTrait;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -54,6 +55,9 @@ class EmployeeController extends Controller
             'departments' => Auth::user()->business->department()->orderBy('title', 'asc')->get(),
             'designations' => Auth::user()->business->designation()->orderBy('title', 'asc')->get(),
             'roles' => Auth::user()->business->role,
+            'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
         ]);
     }
 
@@ -74,6 +78,8 @@ class EmployeeController extends Controller
         $user->password = Hash::make($request->get('password'));
         $user->assignRole($request->role);
         $user->business_id = Auth::user()->business_id;
+        $user->customer_id = $request->customer_id;
+
         $user->save();
 
         $employee = new Employee();
@@ -151,6 +157,9 @@ class EmployeeController extends Controller
             'roles' => Auth::user()->business->role,
             'selected_role_id' => $selected_role_id,
             'employee' => Auth::user()->business->employee()->findOrFail($id),
+            'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
         ]);
     }
 
@@ -188,6 +197,7 @@ class EmployeeController extends Controller
         if ($request->password != ''){
             $user->password = bcrypt($request->password);
         }
+        $user->customer_id=$request->customer_id;
         $user->save();
 
         DB::table('model_has_roles')->where('model_id', $user->id)->where('business_id',Auth::user()->id)->delete();

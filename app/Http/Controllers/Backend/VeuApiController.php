@@ -135,7 +135,9 @@ class VeuApiController extends Controller
 
     public function suppliers()
     {
-        $suppliers = Auth::user()->business->supplier()->where('status', 1)->get();
+        $suppliers = Auth::user()->business->supplier()->where('status', 1)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        })->get();
         return response($suppliers);
     }
 

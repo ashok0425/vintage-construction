@@ -179,16 +179,25 @@
                         </div>
 
                         <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="id_number" class="custom-label"> {{__('pages.employee_id')}} </label>
-                                <input type="text" name="id_number" value="{{$employee->id_number}}" class="form-control" placeholder="{{__('pages.employee_id')}}">
+                            <div class="custom-form-group">
+                                <label for="customer_id" class="custom-label">Site<span class="text-danger">*</span></label>
+                                <select name="customer_id" id="expense_category_id" class="form-select select2-basic" required>
+                                    <option value="">Select Site</option>
+                                    @foreach($customers as $customer)
+                                        <option value="{{$customer->id}}" {{old('customer_id',$employee->user->customer_id) == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('customer_id'))
+                                    <div class="error mt-1">{{ $errors->first('customer_id') }}</div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="joining_date" class="custom-label"> {{__('pages.joining_date')}} <span class="text-danger">*</span> </label>
-                                <input type="text" value="{{$employee->joining_date->format('Y-m-d')}}" name="joining_date"  data-date-format="yyyy-mm-dd" class="datepicker form-control" placeholder="{{__('pages.joining_date')}}">
+                                <input type="text" value="{{$employee->joining_date?->format('Y-m-d')}}" name="joining_date"  data-date-format="yyyy-mm-dd" class="datepicker form-control" placeholder="{{__('pages.joining_date')}}">
                             </div>
                         </div>
                     </div>
