@@ -42,6 +42,10 @@ Route::middleware('auth', 'active')->group(function () {
     Route::resource('expense', 'Backend\ExpenseController');
     Route::get('expense-filter', 'Backend\ExpenseController@filter')->name('expense-filter');
 
+    Route::resource('income-category', 'Backend\IncomeCategoryController');
+    Route::resource('income', 'Backend\IncomeController');
+    Route::get('income-filter', 'Backend\IncomeController@filter')->name('income-filter');
+
     Route::resource('payment-to-supplier', 'Backend\PaymentToSupplierController');
     Route::resource('payment-from-customer', 'Backend\PaymentFromCustomerController');
 

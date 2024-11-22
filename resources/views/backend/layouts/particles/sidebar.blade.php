@@ -86,6 +86,27 @@
         </li>
     @endcan
 
+    @canany(['manage_income', 'manage_income_category'])
+    <li class="aside-nav-item toggleable-group">
+        <a class="aside-nav-link toggler {{ active_if_match('income') }} {{ active_if_match('income-category') }}" href="javascript:void(0)">
+            <span class="aside-nav-icon"><i class="fas fa-money-bill"></i></span>
+            <span class="aside-nav-text">Manage Income</span>
+            <span class="aside-nav-dropdown-icon"></span>
+        </a>
+        <div class="aside-dropdown toggleable-menu {{ active_if_match('income') }} {{ active_if_match('income-category') }}">
+            <div class="aside-submenu">
+                @can('manage_income_category')
+                    <a class="aside-nav-link {{ active_if_full_match('income-category') }}" href="{{route('income-category.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Category</span></a>
+                @endcan
+
+                @can('manage_income')
+                    <a class="aside-nav-link {{ active_if_full_match('income/create') }}" href="{{route('income.create')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Add Income</span></a>
+                    <a class="aside-nav-link {{ active_if_full_match('income') }} {{ active_if_full_match('income/*/edit') }} {{ active_if_full_match('income-filter*') }}" href="{{route('income.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Income List</span></a>
+                @endcan
+            </div>
+        </div>
+    </li>
+@endcan
 
     @canany(['manage_expense', 'manage_expense_category'])
         <li class="aside-nav-item toggleable-group">

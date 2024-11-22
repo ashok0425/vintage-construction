@@ -1,4 +1,4 @@
-<form action="{{route('expense.index')}}" method="get">
+<form action="{{route('income.index')}}" method="get">
 
     <div class="row g-3">
         <div class="col-md-3">

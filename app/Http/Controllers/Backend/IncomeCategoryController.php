@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Expense;
 use Illuminate\Support\Facades\Auth;
 
-class ExpenseCategoryController extends Controller
+class IncomeCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +18,13 @@ class ExpenseCategoryController extends Controller
      */
     public function index()
     {
-        if (!Auth::user()->can('manage_expense_category')) {
+        if (!Auth::user()->can('manage_income_category')) {
             return redirect('home')->with(denied());
         } // end permission checking
 
 
-        return view('backend.expense-category.index',[
-            'categories' => Auth::user()->business->expenseCategory()->where('type',1)->orderBY('id', 'DESC')->get()
+        return view('backend.income-category.index',[
+            'categories' => Auth::user()->business->expenseCategory()->where('type',0)->orderBY('id', 'DESC')->get()
         ]);
     }
 
@@ -46,12 +46,13 @@ class ExpenseCategoryController extends Controller
      */
     public function store(ExpenseCategoryRequest $request)
     {
-        if (!Auth::user()->can('manage_expense_category')) {
+        if (!Auth::user()->can('manage_income_category')) {
             return redirect('home')->with(denied());
         } // end permission checking
 
         $category = new ExpenseCategory();
         $category->name = $request->category['name'];
+        $category->type=0;
         $category->business_id = Auth::user()->business_id;
         $category->save();
         return response($category);
@@ -106,7 +107,7 @@ class ExpenseCategoryController extends Controller
      */
     public function destroy($id)
     {
-        if (!Auth::user()->can('manage_expense_category')) {
+        if (!Auth::user()->can('manage_income_category')) {
             return redirect('home')->with(denied());
         } // end permission checking
 

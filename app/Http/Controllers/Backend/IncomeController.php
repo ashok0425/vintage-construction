@@ -11,7 +11,7 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Toastr;
 
-class ExpenseController extends Controller
+class IncomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +20,11 @@ class ExpenseController extends Controller
      */
     public function index(Request $request)
     {
-        if (!Auth::user()->can('manage_expense')) {
+        if (!Auth::user()->can('manage_income')) {
             return redirect('home')->with(denied());
         } // end permission checking
 
-        $expenses = Auth::user()->business->expense()->where('type',1)->orderBY('id', 'DESC');
+        $expenses = Auth::user()->business->expense()->where('type',0)->orderBY('id', 'DESC');
 
         if ($request->expense_id){
             $expenses = $expenses->where('expense_id', 'like', '%'.$request->expense_id.'%');
@@ -47,9 +47,9 @@ class ExpenseController extends Controller
 
 
         $expenses = $expenses->paginate(50);
-        return view('backend.expense.index',[
+        return view('backend.income.index',[
             'expenses' => $expenses,
-            'expense_categories' => Auth::user()->business->expenseCategory()->get(),
+            'expense_categories' => Auth::user()->business->expenseCategory()->where('type',0)->get(),
            'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
 
         ]);
@@ -63,12 +63,12 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        if (!Auth::user()->can('manage_expense')) {
+        if (!Auth::user()->can('manage_income')) {
             return redirect('home')->with(denied());
         } // end permission checking
 
-        return view('backend.expense.create',[
-        'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',1)->get(),
+        return view('backend.income.create',[
+           'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',0)->get(),
            'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
         ]);
     }
@@ -81,13 +81,14 @@ class ExpenseController extends Controller
      */
     public function store(ExpenseRequest $request)
     {
-        if (!Auth::user()->can('manage_expense')) {
+        if (!Auth::user()->can('manage_income')) {
             return redirect('home')->with(denied());
         } // end permission checking
 
 
         $expense = new Expense();
         $expense->fill($request->all());
+        $expense->type=0;
         $expense->business_id = Auth::user()->business_id;
         $expense->save();
 
@@ -114,7 +115,7 @@ class ExpenseController extends Controller
      */
     public function edit($id)
     {
-        if (!Auth::user()->can('manage_expense')) {
+        if (!Auth::user()->can('manage_income_expense')) {
             return redirect('home')->with(denied());
         } // end permission checking
 
@@ -125,9 +126,9 @@ class ExpenseController extends Controller
             }
         }
 
-        return view('backend.expense.edit',[
+        return view('backend.income.edit',[
             'expense' => $expenses,
-            'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',1)->get(),
+            'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',0)->get(),
            'customers'=> Customer::where('business_id',Auth::user()->business_id)->get()
 
         ]);
@@ -169,7 +170,7 @@ class ExpenseController extends Controller
      */
     public function destroy($id)
     {
-        if (!Auth::user()->can('manage_expense')) {
+        if (!Auth::user()->can('manage_income')) {
             return redirect('home')->with(denied());
         } // end permission checking
 
