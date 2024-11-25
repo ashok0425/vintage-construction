@@ -10,7 +10,7 @@ class Expense extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['expense_date', 'expense_category_id', 'amount', 'note','business_id','customer_id','vehicle_id','fuel','hour'];
+    protected $fillable = ['expense_date', 'expense_category_id', 'amount', 'note','business_id','customer_id','vehicle_id','other','pickup_loc','drop_loc'];
 
     protected $dates = ['expense_date'];
 

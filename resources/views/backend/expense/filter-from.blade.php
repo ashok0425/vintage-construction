@@ -10,6 +10,19 @@
             </select>
         </div>
 
+        @if(request()->query('other'))
+        <input type="hidden" value="1" name="other">
+        <div class="col-sm-6 col-lg-4 col-xl">
+            <div class="form-group">
+                <select name="vehicle_id" class="form-control select2-basic">
+                    <option value="">All Vehicle</option>
+                    @foreach($vehicles as $vehicle)
+                        <option value="{{$vehicle->id}}" {{Request::get('vehicle_id') == $vehicle->id ? 'selected' : ''}}>{{$vehicle->name}} ,{{$vehicle->number}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        @else
         <div class="col-sm-6 col-lg-4 col-xl">
             <div class="form-group">
                 <select name="expense_category_id" class="form-control select2-basic">
@@ -20,6 +33,7 @@
                 </select>
             </div>
         </div>
+        @endif
 
 
         <div class="col-sm-6 col-lg-4 col-xl">

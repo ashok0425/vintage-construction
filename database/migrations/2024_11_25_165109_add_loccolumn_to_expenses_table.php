@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDataColumnToExpensesTable extends Migration
+class AddLoccolumnToExpensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,9 @@ class AddDataColumnToExpensesTable extends Migration
     public function up()
     {
         Schema::table('expenses', function (Blueprint $table) {
-            $table->integer('vehicle_id')->nullable();
-            $table->string('other')->nullable();
+            $table->text('drop_loc')->nullable();
+            $table->text('pickup_loc')->nullable();
+
         });
     }
 
@@ -27,7 +28,7 @@ class AddDataColumnToExpensesTable extends Migration
     public function down()
     {
         Schema::table('expenses', function (Blueprint $table) {
-            $table->dropColumn('vehicle_id','other');
+            $table->drop(['pickup_loc','drop_loc']);
         });
     }
 }

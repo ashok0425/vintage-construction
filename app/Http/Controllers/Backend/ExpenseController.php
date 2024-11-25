@@ -29,6 +29,29 @@ class ExpenseController extends Controller
             return $query->where('customer_id', Auth::user()->customer_id);
         });
 
+        if($request->other){
+            $expenses=$expenses->whereNotNull('vehicle_id')->when($request->vehicle_id,function($query) use($request){
+                return  $query->where('vehicle_id',$request->vehicle_id);
+            });
+            if ($request->start_date != '' || $request->end_date != ''){
+                $start_date = $request->start_date ? $request->start_date : Expense::oldest()->pluck('expense_date')->first();
+                $end_date = $request->end_date ? $request->end_date : Expense::latest()->pluck('expense_date')->first();
+                $expenses = $expenses->whereBetween('expense_date', [$start_date, $end_date]);
+            }
+            if ($request->customer_id){
+                $expenses = $expenses->where('customer_id', $request->customer_id);
+            }
+            $expenses=$expenses->paginate(50);
+            return view('backend.expense.index',[
+                'expenses'=>$expenses,
+                'vehicles'=>Auth::user()->business->vehicle,
+                'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
+            ]);
+
+        }
+
         if ($request->expense_id){
             $expenses = $expenses->where('expense_id', 'like', '%'.$request->expense_id.'%');
         }
@@ -49,7 +72,7 @@ class ExpenseController extends Controller
         }
 
 
-        $expenses = $expenses->paginate(50);
+        $expenses = $expenses->whereNull('vehicle_id')->paginate(50);
         return view('backend.expense.index',[
             'expenses' => $expenses,
             'expense_categories' => Auth::user()->business->expenseCategory()->get(),
@@ -76,7 +99,9 @@ class ExpenseController extends Controller
         'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',1)->get(),
            'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
             return $query->where('id', Auth::user()->customer_id);
-        })->get()
+        })->get(),
+        'vehicles'=>Auth::user()->business->vehicle,
+
         ]);
     }
 

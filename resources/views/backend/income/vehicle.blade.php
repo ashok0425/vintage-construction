@@ -80,6 +80,7 @@
                             <th class="text-center">Income Date</th>
                             <th>Vehicle</th>
                             <th class="text-center">{{__('pages.amount')}}</th>
+                            <th>Note</th>
                             <th class="text-center">{{__('pages.action')}}</th>
                         </tr>
                         </thead>
@@ -91,6 +92,7 @@
                                 <td class="text-center">@formatdate($expense->expense_date)</td>
                                 <td class="text-center"> {{$expense->vehicle ? $expense->vehicle->name.'/'.$expense->vehicle->number  : '--'}} </td>
                                 <td class="text-center"> {{get_option('app_currency')}}{{number_format($expense->amount, 2)}} </td>
+                                <td>{{$expense->note}}</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                         <a href="{{route('income.edit', [$expense->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>

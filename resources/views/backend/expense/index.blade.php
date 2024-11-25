@@ -12,7 +12,7 @@
                         <span class="ps-3"><i class="bi bi-funnel"></i></span>
                     </a>
                     <div class="ps-md-5 ps-xl-4">
-                        <a href="{{route('expense.create')}}" class="btn btn-brand btn-brand-secondary text-nowrap"><i class="fa fa-plus me-2"></i> {{__('pages.new_expense')}}</a>
+                        <a href="{{route('expense.create',['other'=>request()->query('other')])}}" class="btn btn-brand btn-brand-secondary text-nowrap"><i class="fa fa-plus me-2"></i> {{__('pages.new_expense')}}</a>
                     </div>
                 </div>
 
@@ -36,7 +36,13 @@
                             <th>{{__('pages.sl')}}</th>
                             <th>Site Name</th>
                             <th class="text-center">{{__('pages.expense_date')}}</th>
+                            @if (request()->query('other'))
+                            <th class="text-center">Vehicle</th>
+                            <th class="text-center">Other Params</th>
+                            <th class="text-center">Start/End Point</th>                                
+                            @else 
                             <th class="text-center">{{__('pages.expense_category')}}</th>
+                            @endif
                             <th class="text-center">{{__('pages.amount')}}</th>
                             <th class="text-center">Note</th>
 
@@ -50,8 +56,19 @@
                                 <td>{{$expense->customer->site_name}}</td>
 
                                 <td class="text-center">@formatdate($expense->expense_date)</td>
-
+                                @if (request()->query('other'))
+                                <td class="text-center">
+                                    {{$expense->vehicle->name}}
+                                </td>
+                                <td class="text-center">
+                                    {{$expense->other}} 
+                                </td>
+                                <td class="text-center">
+                                    {{$expense->pickup_loc}}/{{$expense->drop_loc}} 
+                                </td>
+                                @else 
                                 <td class="text-center"> {{$expense->expenseCategory ? $expense->expenseCategory->name : '--'}} </td>
+                                @endif
                                 <td class="text-center"> {{get_option('app_currency')}}{{number_format($expense->amount, 2)}} </td>
 
                                 <td>{{$expense->note}}</td>

@@ -121,6 +121,9 @@
                     @can('manage_expense')
                         <a class="aside-nav-link {{ active_if_full_match('expense/create') }}" href="{{route('expense.create')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.create_expense')}}</span></a>
                         <a class="aside-nav-link {{ active_if_full_match('expense') }} {{ active_if_full_match('expense/*/edit') }} {{ active_if_full_match('expense-filter*') }}" href="{{route('expense.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.expense_list')}}</span></a>
+
+                        <a class="aside-nav-link {{ active_if_full_match('expense') }} {{ active_if_full_match('expense/*/edit') }} {{ active_if_full_match('expense-filter*') }}" href="{{route('expense.index',['other'=>1])}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Other Expense</span></a>
+
                     @endcan
                 </div>
             </div>
