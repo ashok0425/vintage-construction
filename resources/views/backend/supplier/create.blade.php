@@ -20,7 +20,7 @@
                         @can('do anything')
                         <div class="col-md-6">
                         <div class="custom-form-group">
-                            <label for="customer_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
+                            <label for="customer_id" class="custom-label">Construction Site<span class="text-danger">*</span></label>
                             <select name="customer_id" id="expense_category_id" class="form-select select2-basic">
                                 <option value="">Select Site</option>
                                 @foreach($customers as $customer)

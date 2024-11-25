@@ -25,6 +25,7 @@
                             @endif
                         </div>
 
+                        @if (!request()->query('isvehicle'))
                         <div class="custom-form-group">
                             <label for="expense_category_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
                             <select name="expense_category_id" id="expense_category_id" class="form-select select2-basic">
@@ -38,6 +39,24 @@
                                 <div class="error mt-1">{{ $errors->first('expense_category_id') }}</div>
                             @endif
                         </div>
+                        @else
+                        <input type="hidden" value="1" name="isvehicle">
+                        <div class="custom-form-group">
+                            <label for="vehicle_id" class="custom-label">Select Vehicle <span class="text-danger">*</span></label>
+                            <select name="vehicle_id" id="vehicle_id" class="form-select select2-basic">
+                                <option value="">Vehicle</option>
+                                @foreach($vehicles as $vehicle)
+                                    <option value="{{$vehicle->id}}" {{old('vehicle') == $vehicle->id ? 'selected' : ''}}>{{$vehicle->name}}{{$vehicle->number}}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('vehicle_id'))
+                                <div class="error mt-1">{{ $errors->first('vehicle_id') }}</div>
+                            @endif
+                        </div>
+
+                        @endif
+
 
                         @can('do anything')
                         <div class="custom-form-group">

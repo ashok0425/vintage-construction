@@ -28,6 +28,27 @@ class IncomeController extends Controller
             return $query->where('customer_id', Auth::user()->customer_id);
         });;
 
+        if($request->isvehicle){
+            $expenses=$expenses->whereNotNull('vehicle_id')->when($request->vehicle_id,function() use($request){
+                return  $this->where('vehicle_id',$request->vehicle_id);
+            });
+            if ($request->start_date != '' || $request->end_date != ''){
+                $start_date = $request->start_date ? $request->start_date : Expense::oldest()->pluck('expense_date')->first();
+                $end_date = $request->end_date ? $request->end_date : Expense::latest()->pluck('expense_date')->first();
+                $expenses = $expenses->whereBetween('expense_date', [$start_date, $end_date]);
+            }
+
+            $expenses=$expenses->paginate(50);
+            return view('backend.income.vehicle',[
+                'expenses'=>$expenses,
+                'vehicles'=>Auth::user()->business->vehicle,
+                'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
+            ]);
+
+        }
+
         if ($request->expense_id){
             $expenses = $expenses->where('expense_id', 'like', '%'.$request->expense_id.'%');
         }
@@ -43,12 +64,11 @@ class IncomeController extends Controller
         if ($request->start_date != '' || $request->end_date != ''){
             $start_date = $request->start_date ? $request->start_date : Expense::oldest()->pluck('expense_date')->first();
             $end_date = $request->end_date ? $request->end_date : Expense::latest()->pluck('expense_date')->first();
-
             $expenses = $expenses->whereBetween('expense_date', [$start_date, $end_date]);
         }
 
 
-        $expenses = $expenses->paginate(50);
+        $expenses = $expenses->whereNull('vehicle_id')->paginate(50);
         return view('backend.income.index',[
             'expenses' => $expenses,
             'expense_categories' => Auth::user()->business->expenseCategory()->where('type',0)->get(),
@@ -73,6 +93,7 @@ class IncomeController extends Controller
 
         return view('backend.income.create',[
            'expense_categories' => ExpenseCategory::where('business_id',Auth::user()->business_id)->where('type',0)->get(),
+           'vehicles'=>Auth::user()->business->vehicle,
            'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
             return $query->where('id', Auth::user()->customer_id);
         })->get()

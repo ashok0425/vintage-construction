@@ -1,6 +1,7 @@
 <form action="{{route('income.index')}}" method="get">
 
     <div class="row g-3">
+        @can('do anything')
         <div class="col-md-3">
             <select name="customer_id" class="form-select select2-basic">
                 <option value="">All Site</option>
@@ -9,6 +10,8 @@
                 @endforeach
             </select>
         </div>
+        @endcan
+
 
         <div class="col-sm-6 col-lg-4 col-xl">
             <div class="form-group">

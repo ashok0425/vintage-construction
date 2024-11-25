@@ -11,9 +11,15 @@
 <ul class="aside-nav-menu">
 
     @can('do anything')
-
     <li class="aside-nav-item">
         <a class="aside-nav-link {{ active_if_full_match('customer') }} {{ active_if_full_match('customer/create') }} {{ active_if_full_match('customer/*/edit') }} {{ active_if_full_match('customer/*') }}" href="{{route('customer.index')}}"><span class="aside-nav-icon"><i class="fas fa-house"></i></span> <span class="aside-nav-text">Construction Site</span></a>
+
+    </li>
+    @endcan
+
+    @can('manage_vehicle')
+    <li class="aside-nav-item">
+        <a class="aside-nav-link {{ active_if_full_match('vehicle') }} {{ active_if_full_match('vehicle/create') }} {{ active_if_full_match('vehicle/*/edit') }} {{ active_if_full_match('vehicle/*') }}" href="{{route('vehicle.index')}}"><span class="aside-nav-icon"><i class="fas fa-truck"></i></span> <span class="aside-nav-text">Manage Vehicle</span></a>
 
     </li>
     @endcan
@@ -85,9 +91,15 @@
                 @endcan
 
                 @can('manage_income')
-                    <a class="aside-nav-link {{ active_if_full_match('income/create') }}" href="{{route('income.create')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Add Income</span></a>
                     <a class="aside-nav-link {{ active_if_full_match('income') }} {{ active_if_full_match('income/*/edit') }} {{ active_if_full_match('income-filter*') }}" href="{{route('income.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Income List</span></a>
                 @endcan
+
+                @can('manage_income')
+
+                <a class="aside-nav-link {{ active_if_full_match('income') }} {{ active_if_full_match('income/*/edit') }} {{ active_if_full_match('income-filter*') }}" href="{{route('income.index',['isvehicle'=>1])}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Vehicle Income List</span></a>
+            @endcan
+
+
             </div>
         </div>
     </li>

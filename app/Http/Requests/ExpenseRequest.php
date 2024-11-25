@@ -25,7 +25,7 @@ class ExpenseRequest extends FormRequest
     {
         return [
             'expense_date' => 'required|date',
-            'expense_category_id' => 'required',
+            'expense_category_id' => 'nullable',
             'amount' => 'required|numeric|min:0'
         ];
     }

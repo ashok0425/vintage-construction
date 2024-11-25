@@ -10,11 +10,13 @@ class Expense extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['expense_date', 'expense_category_id', 'amount', 'note','business_id','customer_id'];
+    protected $fillable = ['expense_date', 'expense_category_id', 'amount', 'note','business_id','customer_id','vehicle_id','fuel','hour'];
 
     protected $dates = ['expense_date'];
 
-
+    protected $casts=[
+        'data'=>'array'
+    ];
 
     public function expenseCategory()
     {
@@ -24,6 +26,11 @@ class Expense extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class)->withTrashed();
+    }
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
     }
 
     protected static function boot()

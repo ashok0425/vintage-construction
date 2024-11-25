@@ -40,6 +40,7 @@ Route::middleware('auth', 'active')->group(function () {
     Route::post('requisition-canceled/{id}', 'Backend\RequisitionController@statuaChgangeToCanceled')->name('requisition-canceled');
     Route::resource('expense-category', 'Backend\ExpenseCategoryController');
     Route::resource('expense', 'Backend\ExpenseController');
+    Route::resource('vehicle', 'Backend\VehicleController');
     Route::get('expense-filter', 'Backend\ExpenseController@filter')->name('expense-filter');
 
     Route::resource('income-category', 'Backend\IncomeCategoryController');
