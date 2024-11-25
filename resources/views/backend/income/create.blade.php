@@ -9,39 +9,39 @@
             <div class="wiz-card-header">
                 <h5 class="wiz-card-title mb-0">Add Income</h5>
                 <div>
-                    <a href="{{route('income.index')}}" class="btn btn-brand btn-brand-secondary btn-sm"><i class="fa fa-list me-2"></i>Income List</a>
+                    <a href="{{route('income.index')}}" class="btn btn-brand btn-brand-secondary btn-sm"><i class="fa fa-list me-2"></i> Income List</a>
                 </div>
             </div>
             <div class="wiz-card-body p-4">
                 <form action="{{route('income.store')}}" method="post" data-parsley-validate>
                     @csrf
 
-                    <div>
-                        <div class="custom-form-group">
+                    <div class="row">
+                        <div class="custom-form-group col-md-6">
                             <label for="expense_date" class="custom-label">Income Date <span class="text-danger">*</span></label>
-                            <input name="expense_date" value="{{old('expense_date') ? old('expense_date') : \Carbon\Carbon::now()->format('Y-m-d')}}" id="expense_date" type="text" data-date-format="yyyy-mm-dd" class="datepicker form-control" placeholder="Income Date" required autocomplete="off">
+                            <input name="expense_date" value="{{old('expense_date') ? old('expense_date') : \Carbon\Carbon::now()->format('Y-m-d')}}" id="expense_date" type="text" data-date-format="yyyy-mm-dd" class="datepicker form-control" placeholder="{{__('pages.expense_date')}}" required autocomplete="off">
                             @if ($errors->has('expense_date'))
                                 <div class="error">{{ $errors->first('expense_date') }}</div>
                             @endif
                         </div>
 
-                        @if (!request()->query('isvehicle'))
-                        <div class="custom-form-group">
-                            <label for="expense_category_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
-                            <select name="expense_category_id" id="expense_category_id" class="form-select select2-basic">
-                                <option value="">Income Category</option>
-                                @foreach($expense_categories as $expense_category)
-                                    <option value="{{$expense_category->id}}" {{old('expense_category_id') == $expense_category->id ? 'selected' : ''}}>{{$expense_category->name}}</option>
+                        @can('do anything')
+                        <div class="custom-form-group col-md-6">
+                            <label for="customer_id" class="custom-label">Construction Site <span class="text-danger">*</span></label>
+                            <select name="customer_id" id="customer_id" class="form-select select2-basic" required>
+                                <option value="">Select Site</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{$customer->id}}" {{old('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
                                 @endforeach
                             </select>
 
-                            @if ($errors->has('expense_category_id'))
-                                <div class="error mt-1">{{ $errors->first('expense_category_id') }}</div>
+                            @if ($errors->has('customer_id'))
+                                <div class="error mt-1">{{ $errors->first('customer_id') }}</div>
                             @endif
                         </div>
-                        @else
-                        <input type="hidden" value="1" name="isvehicle">
-                        <div class="custom-form-group">
+                        @endcan
+                        @if (request()->query('other'))
+                        <div class="custom-form-group  col-md-6">
                             <label for="vehicle_id" class="custom-label">Select Vehicle <span class="text-danger">*</span></label>
                             <select name="vehicle_id" id="vehicle_id" class="form-select select2-basic">
                                 <option value="">Vehicle</option>
@@ -54,28 +54,51 @@
                                 <div class="error mt-1">{{ $errors->first('vehicle_id') }}</div>
                             @endif
                         </div>
+                        <div class="custom-form-group col-md-6">
+                            <label for="other" class="custom-label">Other Param (other in ltr/ Time in hrs) <span class="text-danger">*</span></label>
+                            <input type="text" name="other" step=".1" min="0" id="other" value="{{old('other')}}" placeholder="other" class="form-control" aria-describedby="emailHelp" required>
+                            @if ($errors->has('other'))
+                                <div class="error">{{ $errors->first('other') }}</div>
+                            @endif
+                        </div>
 
-                        @endif
+                        <div class="custom-form-group col-md-6">
+                            <label for="pickup_loc" class="custom-label">Pickup Location</label>
+                            <input type="text" name="pickup_loc"  min="0" id="pickup_loc" value="{{old('pickup_loc')}}" placeholder="Pickup Location" class="form-control">
+                            @if ($errors->has('pickup_loc'))
+                                <div class="error">{{ $errors->first('pickup_loc') }}</div>
+                            @endif
+                        </div>
 
+                        
+                        <div class="custom-form-group col-md-6">
+                            <label for="drop_loc" class="custom-label">Drop Location</label>
+                            <input type="text" name="drop_loc"  min="0" id="drop_loc" value="{{old('drop_loc')}}" placeholder="Pickup Location" class="form-control">
+                            @if ($errors->has('drop_loc'))
+                                <div class="error">{{ $errors->first('drop_loc') }}</div>
+                            @endif
+                        </div>
 
-                        @can('do anything')
-                        <div class="custom-form-group">
-                            <label for="customer_id" class="custom-label">Construction Site <span class="text-danger">*</span></label>
-                            <select name="customer_id" id="customer_id" class="form-select select2-basic">
-                                <option value="">Select Site</option>
-                                @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}" {{old('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
+                        @else
+                        <div class="custom-form-group col-md-6">
+                            <label for="expense_category_id" class="custom-label">Income Category <span class="text-danger">*</span></label>
+                            <select name="expense_category_id" id="expense_category_id" class="form-select select2-basic">
+                                <option value="">{{__('pages.select_category')}}</option>
+                                @foreach($expense_categories as $expense_category)
+                                    <option value="{{$expense_category->id}}" {{old('expense_category_id') == $expense_category->id ? 'selected' : ''}}>{{$expense_category->name}}</option>
                                 @endforeach
                             </select>
 
-                            @if ($errors->has('customer_id'))
-                                <div class="error mt-1">{{ $errors->first('customer_id') }}</div>
+                            @if ($errors->has('expense_category_id'))
+                                <div class="error mt-1">{{ $errors->first('expense_category_id') }}</div>
                             @endif
                         </div>
-                        @endcan
+                        @endif
 
 
-                        <div class="custom-form-group">
+
+
+                        <div class="custom-form-group col-md-6">
                             <label for="amount" class="custom-label">{{__('pages.amount')}} <span class="text-danger">*</span></label>
                             <input type="number" name="amount" step=".1" min="0" id="amount" value="{{old('amount')}}" placeholder="{{__('pages.amount')}}" class="form-control" aria-describedby="emailHelp" required>
                             @if ($errors->has('amount'))
@@ -83,7 +106,7 @@
                             @endif
                         </div>
 
-                        <div class="custom-form-group mb-4">
+                        <div class="custom-form-group col-md-6 mb-4">
                             <label for="note" class="custom-label">{{__('pages.note')}}</label>
                             <textarea name="note" placeholder="Short Note" class="form-control">{{old('note')}}</textarea>
                         </div>

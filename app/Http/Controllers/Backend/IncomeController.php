@@ -28,7 +28,7 @@ class IncomeController extends Controller
             return $query->where('customer_id', Auth::user()->customer_id);
         });;
 
-        if($request->isvehicle){
+        if($request->other){
             $expenses=$expenses->whereNotNull('vehicle_id')->when($request->vehicle_id,function() use($request){
                 return  $this->where('vehicle_id',$request->vehicle_id);
             });
@@ -39,7 +39,7 @@ class IncomeController extends Controller
             }
 
             $expenses=$expenses->paginate(50);
-            return view('backend.income.vehicle',[
+            return view('backend.income.index',[
                 'expenses'=>$expenses,
                 'vehicles'=>Auth::user()->business->vehicle,
                 'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){

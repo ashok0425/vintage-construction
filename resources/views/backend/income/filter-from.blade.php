@@ -1,7 +1,6 @@
-<form action="{{route('income.index')}}" method="get">
+<form action="{{route('expense.index')}}" method="get">
 
     <div class="row g-3">
-        @can('do anything')
         <div class="col-md-3">
             <select name="customer_id" class="form-select select2-basic">
                 <option value="">All Site</option>
@@ -10,9 +9,20 @@
                 @endforeach
             </select>
         </div>
-        @endcan
 
-
+        @if(request()->query('other'))
+        <input type="hidden" value="1" name="other">
+        <div class="col-sm-6 col-lg-4 col-xl">
+            <div class="form-group">
+                <select name="vehicle_id" class="form-control select2-basic">
+                    <option value="">All Vehicle</option>
+                    @foreach($vehicles as $vehicle)
+                        <option value="{{$vehicle->id}}" {{Request::get('vehicle_id') == $vehicle->id ? 'selected' : ''}}>{{$vehicle->name}} ,{{$vehicle->number}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        @else
         <div class="col-sm-6 col-lg-4 col-xl">
             <div class="form-group">
                 <select name="expense_category_id" class="form-control select2-basic">
@@ -23,6 +33,7 @@
                 </select>
             </div>
         </div>
+        @endif
 
 
         <div class="col-sm-6 col-lg-4 col-xl">

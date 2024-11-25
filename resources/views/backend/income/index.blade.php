@@ -1,5 +1,5 @@
 @extends('backend.layouts.app')
-@section('title')Income @endsection
+@section('title') Income @endsection
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -12,13 +12,13 @@
                         <span class="ps-3"><i class="bi bi-funnel"></i></span>
                     </a>
                     <div class="ps-md-5 ps-xl-4">
-                        <a href="{{route('income.create')}}" class="btn btn-brand btn-brand-secondary text-nowrap"><i class="fa fa-plus me-2"></i> Add Income</a>
+                        <a href="{{route('income.create',['other'=>request()->query('other')])}}" class="btn btn-brand btn-brand-secondary text-nowrap"><i class="fa fa-plus me-2"></i> Add Income</a>
                     </div>
                 </div>
 
                 <div class="flex-grow-1">
                     <div class="collapse d-md-block" id="mwFilterCollapse">
-                        @include('backend.income.filter-from')
+                        @include('backend.expense.filter-from')
                     </div>
                 </div>
 
@@ -28,17 +28,24 @@
 
         <div class="wiz-card">
             <div class="wiz-card-body">
-                <h5 class="wiz-card-title">Income</h5>
+                <h5 class="wiz-card-title">Expense</h5>
                 <div class="table-responsive-md">
                     <table class="table table-bordered wiz-table mw-col-width-skip-first">
                         <thead>
                         <tr class="bg-secondary text-white">
                             <th>{{__('pages.sl')}}</th>
                             <th>Site Name</th>
-                            <th class="text-center">Income Date</th>
-                            <th class="text-center">Income Category</th>
+                            <th class="text-center">{{__('pages.expense_date')}}</th>
+                            @if (request()->query('other'))
+                            <th class="text-center">Vehicle</th>
+                            <th class="text-center">Other Params</th>
+                            <th class="text-center">Start/End Point</th>                                
+                            @else 
+                            <th class="text-center">{{__('pages.expense_category')}}</th>
+                            @endif
                             <th class="text-center">{{__('pages.amount')}}</th>
-                            <th>Note</th>
+                            <th class="text-center">Note</th>
+
                             <th class="text-center">{{__('pages.action')}}</th>
                         </tr>
                         </thead>
@@ -49,14 +56,25 @@
                                 <td>{{$expense->customer->site_name}}</td>
 
                                 <td class="text-center">@formatdate($expense->expense_date)</td>
-
+                                @if (request()->query('other'))
+                                <td class="text-center">
+                                    {{$expense->vehicle->name}}
+                                </td>
+                                <td class="text-center">
+                                    {{$expense->other}} 
+                                </td>
+                                <td class="text-center">
+                                    {{$expense->pickup_loc}}/{{$expense->drop_loc}} 
+                                </td>
+                                @else 
                                 <td class="text-center"> {{$expense->expenseCategory ? $expense->expenseCategory->name : '--'}} </td>
+                                @endif
                                 <td class="text-center"> {{get_option('app_currency')}}{{number_format($expense->amount, 2)}} </td>
-                                <td>{{$expense->note}}</td>
 
+                                <td>{{$expense->note}}</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                        <a href="{{route('income.edit', [$expense->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>
+                                        <a href="{{route('expense.edit', [$expense->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>
                                         <a href="javascript:void(0)" class="mx-2 show-expense-details" data-bs-toggle="offcanvas" data-bs-target="#expenseDetails{{$expense->id}}" data-expense-id="{{$expense->id}}"><i class="bi bi-eye"></i></a>
 
                                         <div class="offcanvas offcanvas-end" tabindex="-1" id="expenseDetails{{$expense->id}}">

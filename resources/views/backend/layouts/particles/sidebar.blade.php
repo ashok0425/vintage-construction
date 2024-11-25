@@ -96,7 +96,7 @@
 
                 @can('manage_income')
 
-                <a class="aside-nav-link {{ active_if_full_match('income') }} {{ active_if_full_match('income/*/edit') }} {{ active_if_full_match('income-filter*') }}" href="{{route('income.index',['isvehicle'=>1])}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Vehicle Income List</span></a>
+                <a class="aside-nav-link {{ active_if_full_match('income') }} {{ active_if_full_match('income/*/edit') }} {{ active_if_full_match('income-filter*') }}" href="{{route('income.index',['other'=>1])}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">Other Income</span></a>
             @endcan
 
 
