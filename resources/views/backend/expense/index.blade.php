@@ -74,7 +74,7 @@
                                 <td>{{$expense->note}}</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                        <a href="{{route('expense.edit', [$expense->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>
+                                        {{-- <a href="{{route('expense.edit', [$expense->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a> --}}
                                         <a href="javascript:void(0)" class="mx-2 show-expense-details" data-bs-toggle="offcanvas" data-bs-target="#expenseDetails{{$expense->id}}" data-expense-id="{{$expense->id}}"><i class="bi bi-eye"></i></a>
 
                                         <div class="offcanvas offcanvas-end" tabindex="-1" id="expenseDetails{{$expense->id}}">

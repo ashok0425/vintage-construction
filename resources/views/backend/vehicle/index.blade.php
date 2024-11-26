@@ -33,8 +33,7 @@
                                 <td>{{$vehicle->number}}</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                        <a href="{{route('vehicle.edit', [$vehicle->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>
-
+                                        {{-- <a href="{{route('vehicle.edit', [$vehicle->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a> --}}
                                         <a href="javascript:void(0);" onclick="$(this).confirmDelete($('#delete-{{$key}}')) " class="mx-2 text-danger"><i class="bi bi-trash3"></i></a>
                                         <form action="{{ route('vehicle.destroy',$vehicle->id) }}" method="post" id="delete-{{$key}}"> @csrf @method('delete') </form>
                                     </div>
