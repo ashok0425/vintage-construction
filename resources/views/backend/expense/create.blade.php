@@ -55,8 +55,8 @@
                             @endif
                         </div>
                         <div class="custom-form-group col-md-6">
-                            <label for="other" class="custom-label">Other Param (other in ltr/ Time in hrs) <span class="text-danger">*</span></label>
-                            <input type="text" name="other" step=".1" min="0" id="other" value="{{old('other')}}" placeholder="other" class="form-control" aria-describedby="emailHelp" required>
+                            <label for="other" class="custom-label">Other Param (other in ltr/ Time in hrs/No.of trip) <span class="text-danger">*</span></label>
+                            <input type="text" name="other"  min="0" id="other" value="{{old('other')}}" placeholder="other" class="form-control" aria-describedby="emailHelp" required>
                             @if ($errors->has('other'))
                                 <div class="error">{{ $errors->first('other') }}</div>
                             @endif
@@ -70,7 +70,7 @@
                             @endif
                         </div>
 
-                        
+
                         <div class="custom-form-group col-md-6">
                             <label for="drop_loc" class="custom-label">Drop Location</label>
                             <input type="text" name="drop_loc"  min="0" id="drop_loc" value="{{old('drop_loc')}}" placeholder="Pickup Location" class="form-control">
