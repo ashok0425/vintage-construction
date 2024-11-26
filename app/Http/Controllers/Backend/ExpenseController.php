@@ -120,6 +120,7 @@ class ExpenseController extends Controller
 
         $expense = new Expense();
         $expense->fill($request->all());
+        $expense->type=1;
         $expense->business_id = Auth::user()->business_id;
         $expense->customer_id = $request->customer_id??Auth::user()->customer_id;
         $expense->save();
