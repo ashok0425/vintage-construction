@@ -123,6 +123,7 @@ class ExpenseController extends Controller
         $expense->type=1;
         $expense->business_id = Auth::user()->business_id;
         $expense->customer_id = $request->customer_id??Auth::user()->customer_id;
+        $expense->amount = $request->amount??0;
         $expense->save();
 
         Toastr::success('Expense successfully saved', '', ['progressBar' => true, 'closeButton' => true, 'positionClass' => 'toast-bottom-right']);

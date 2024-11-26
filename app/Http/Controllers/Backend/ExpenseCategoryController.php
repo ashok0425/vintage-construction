@@ -52,6 +52,7 @@ class ExpenseCategoryController extends Controller
 
         $category = new ExpenseCategory();
         $category->name = $request->category['name'];
+        $category->type = 1;
         $category->business_id = Auth::user()->business_id;
         $category->save();
         return response($category);

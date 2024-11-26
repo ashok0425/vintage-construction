@@ -99,8 +99,8 @@
 
 
                         <div class="custom-form-group col-md-6">
-                            <label for="amount" class="custom-label">{{__('pages.amount')}} <span class="text-danger">*</span></label>
-                            <input type="number" name="amount" step=".1" min="0" id="amount" value="{{old('amount')}}" placeholder="{{__('pages.amount')}}" class="form-control" aria-describedby="emailHelp" required>
+                            <label for="amount" class="custom-label">{{__('pages.amount')}}</label>
+                            <input type="number" name="amount" step=".1" min="0" id="amount" value="{{old('amount')}}" placeholder="{{__('pages.amount')}}" class="form-control" aria-describedby="emailHelp">
                             @if ($errors->has('amount'))
                                 <div class="error">{{ $errors->first('amount') }}</div>
                             @endif
