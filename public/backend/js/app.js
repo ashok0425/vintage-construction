@@ -2675,7 +2675,7 @@ __webpack_require__.r(__webpack_exports__);
     storeCategory: function storeCategory() {
       var _this = this;
 
-      axios.post('income-category', {
+      axios.post('expense-category', {
         category: JSON.parse(JSON.stringify(this.newCategory))
       }).then(function (response) {
         _this.newCategory.name = '';
@@ -2702,7 +2702,7 @@ __webpack_require__.r(__webpack_exports__);
     updateCategory: function updateCategory() {
       var _this3 = this;
 
-      axios.patch('income-category/' + this.category.id, {
+      axios.patch('expense-category/' + this.category.id, {
         category: JSON.parse(JSON.stringify(this.newCategory))
       }).then(function (response) {
         _this3.newCategory.name = '';
@@ -2725,7 +2725,7 @@ __webpack_require__.r(__webpack_exports__);
         dangerMode: true
       }).then(function (willDelete) {
         if (willDelete) {
-          axios["delete"]('income-category/' + id).then(function (response) {
+          axios["delete"]('expense-category/' + id).then(function (response) {
             if (response.data[0] == 'success') {
               _this4.categories.splice(index, 1);
 
@@ -28183,7 +28183,7 @@ var render = function() {
         _c("div", { staticClass: "wiz-card" }, [
           _c("div", { staticClass: "wiz-card-header" }, [
             _c("h6", { staticClass: "wiz-card-title" }, [
-              _vm._v("Income Category")
+              _vm._v(_vm._s(_vm.lang.expense_categories))
             ]),
             _vm._v(" "),
             _c("div", [

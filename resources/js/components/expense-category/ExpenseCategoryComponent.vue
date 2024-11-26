@@ -5,7 +5,7 @@
                 <div class="wiz-card">
                     <!-- Card Header - Dropdown -->
                     <div class="wiz-card-header">
-                        <h6 class="wiz-card-title">Income Category</h6>
+                        <h6 class="wiz-card-title">{{lang.expense_categories}}</h6>
                         <div>
                             <a href="javascript:void(0)" @click="openCreateDrower" class="btn btn-brand btn-brand-secondary btn-sm"><i class="fa fa-plus me-1"></i> {{lang.create_expense_category}} </a>
                         </div>
@@ -126,7 +126,7 @@
                 this.createDrower = true
             },
             storeCategory: function () {
-                axios.post('income-category', {category: JSON.parse(JSON.stringify(this.newCategory))}).then((response) => {
+                axios.post('expense-category', {category: JSON.parse(JSON.stringify(this.newCategory))}).then((response) => {
                     this.newCategory.name = '';
                     this.createDrower= false;
                     this.categories.unshift(response.data);
@@ -148,7 +148,7 @@
             },
 
             updateCategory: function () {
-                axios.patch('income-category/' + this.category.id , {category: JSON.parse(JSON.stringify(this.newCategory))}).then((response) => {
+                axios.patch('expense-category/' + this.category.id , {category: JSON.parse(JSON.stringify(this.newCategory))}).then((response) => {
                     this.newCategory.name = '';
                     this.editDrower = false;
                     this.designation = {};
@@ -168,7 +168,7 @@
                     dangerMode: true,
                 }).then((willDelete) => {
                     if (willDelete) {
-                        axios.delete('income-category/' + id).then((response) => {
+                        axios.delete('expense-category/' + id).then((response) => {
                             if(response.data[0]=='success'){
                                 this.categories.splice(index, 1);
                                toastr["success"](response.data[1]);
