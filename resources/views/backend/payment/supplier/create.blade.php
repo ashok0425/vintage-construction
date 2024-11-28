@@ -13,16 +13,31 @@
                     @csrf
 
 
-                    <div>
-                        <div class="custom-form-group">
+                    <div class="row">
+                        <div class="custom-form-group col-md-6">
                             <label for="payment_date" class="custom-label">{{__('pages.payment_date')}} <span class="text-danger">*</span></label>
                             <input name="payment_date" value="{{old('payment_date') ? old('payment_date') : \Carbon\Carbon::now()->format('Y-m-d')}}" id="payment_date" type="text" data-date-format="yyyy-mm-dd" class="datepicker form-control" placeholder="{{__('pages.date')}}" required autocomplete="off">
                             @if ($errors->has('payment_date'))
                                 <div class="error">{{ $errors->first('payment_date') }}</div>
                             @endif
                         </div>
+                        @can('do anything')
+                        <div class="custom-form-group col-md-6 col-md-6">
+                            <label for="customer_id" class="custom-label">Construction Site <span class="text-danger">*</span></label>
+                            <select name="customer_id" id="customer_id" class="form-select select2-basic" required>
+                                <option value="">Select Site</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{$customer->id}}" {{old('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}}</option>
+                                @endforeach
+                            </select>
 
-                        <div class="custom-form-group">
+                            @if ($errors->has('customer_id'))
+                                <div class="error mt-1">{{ $errors->first('customer_id') }}</div>
+                            @endif
+                        </div>
+                        @endcan
+
+                        <div class="custom-form-group col-md-6">
                             <label for="supplier_id" class="custom-label">{{__('pages.supplier')}} <span class="text-danger">*</span></label>
                             <select name="supplier_id" id="supplier_id" class="form-select select2-basic">
                                 <option value="">{{__('pages.select_supplier')}}</option>
@@ -37,7 +52,7 @@
                             @endif
                         </div>
 
-                        <div class="custom-form-group">
+                        <div class="custom-form-group col-md-6">
                             <label for="amount" class="custom-label">{{__('pages.amount')}} <span class="text-danger">*</span></label>
                             <input type="number" id="amount" name="amount"  min="0" step=".1" id="amount" value="{{old('amount')}}" placeholder="{{__('pages.amount')}}" class="form-control form-control-lg" aria-describedby="emailHelp" required>
                             @if ($errors->has('amount'))
@@ -45,7 +60,7 @@
                             @endif
                         </div>
 
-                        <div class="custom-form-group mb-4">
+                        <div class="custom-form-group col-md-6 mb-4">
                             <label for="note" class="custom-label">{{__('pages.note')}}</label>
                             <textarea name="note" class="form-control">{{old('note')}}</textarea>
                         </div>

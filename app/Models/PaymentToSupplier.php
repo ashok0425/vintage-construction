@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class PaymentToSupplier extends Model
 {
 
-    protected $fillable = ['payment_date','supplier_id','amount','note'];
+    protected $fillable = ['payment_date','supplier_id','amount','note','customer_id'];
 
     protected $dates = ['payment_date'];
 
@@ -17,6 +17,11 @@ class PaymentToSupplier extends Model
     public function supplier()
     {
         return $this->belongsTo(Supplier::class)->withTrashed();
+    }
+
+    public function site()
+    {
+        return $this->belongsTo(Customer::class,'customer_id','id')->withTrashed();
     }
 
     protected static function boot()

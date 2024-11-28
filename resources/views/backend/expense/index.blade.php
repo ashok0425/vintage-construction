@@ -50,7 +50,13 @@
                         </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $total=0;
+                            @endphp
                         @foreach($expenses as $key => $expense)
+                        @php
+                            $total += $expense->amount;
+                        @endphp
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$expense->customer->site_name}}</td>
@@ -115,6 +121,10 @@
                                 </td>
                             </tr>
                         @endforeach
+                        <tr>
+                            <th colspan="6" class="text-center">Total</th>
+                            <th>{{$total}}</th>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

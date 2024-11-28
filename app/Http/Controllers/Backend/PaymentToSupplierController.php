@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Toastr;
@@ -38,6 +39,9 @@ class PaymentToSupplierController extends Controller
         if ($request->supplier_id){
             $payments = $payments->where('supplier_id', $request->supplier_id);
         }
+        if ($request->customer_id){
+            $payments = $payments->where('customer_id', $request->customer_id);
+        }
 
         if ($request->start_date || $request->end_date ){
             $start_date = $request->start_date ? $request->start_date : PaymentToSupplier::oldest()->pluck('payment_date')->first();
@@ -51,6 +55,9 @@ class PaymentToSupplierController extends Controller
         return view('backend.payment.supplier.index',[
             'payments' => $payments,
             'suppliers' =>  Auth::user()->business->supplier,
+          'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
         ]);
     }
 
@@ -67,6 +74,9 @@ class PaymentToSupplierController extends Controller
 
         return view('backend.payment.supplier.create',[
             'suppliers' => Auth::user()->business->supplier()->where('status', 1)->get(),
+            'customers'=> Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get()
         ]);
     }
 

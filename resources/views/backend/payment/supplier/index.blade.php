@@ -35,6 +35,7 @@
                         <thead>
                         <tr class="bg-secondary text-white">
                             <th>{{__('pages.sl')}}</th>
+                            <th>Site</th>
                             <th class="text-center">{{__('pages.supplier')}}</th>
                             <th class="text-center">{{__('pages.date')}}</th>
                             <th class="text-center">{{__('pages.amount')}}</th>
@@ -42,9 +43,16 @@
                         </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $total=0;
+                            @endphp
                         @foreach($payments as $key => $payment)
+                        @php
+                            $total+=$payment->amount;
+                        @endphp
                             <tr>
                                 <td class="text-center">{{$key+1}}</td>
+                                <td style="width: 200px">{{$payment->site?->site_name}}</td>
                                 <td class="text-center">
                                     <a href="{{route('supplier.show', [$payment->supplier_id])}}" target="_blank">
                                         {{$payment->supplier ? $payment->supplier->company_name : '--'}}
@@ -95,6 +103,14 @@
                             </tr>
 
                         @endforeach
+                        <tr>
+                            <th colspan="4">
+                                Total</th>
+                                <th>
+                                    {{$total}}
+                                </th>
+
+                        </tr>
                         </tbody>
                     </table>
                 </div>

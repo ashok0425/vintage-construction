@@ -14,7 +14,17 @@
         </tr>
         </thead>
         <tbody>
+            @php
+                $total_amount=0;
+                $paid_amount=0;
+                $due_amount=0;
+            @endphp
         @forelse($purchases as $key => $purchase)
+        @php
+            $total_amount+=$purchase->total_amount;
+            $paid_amount+=$purchase->paid_amount;
+            $due_amount+=$purchase->due_amount;
+        @endphp
             <tr>
                 <td>{{$key+1}}</td>
                 <td>{{$purchase->invoice_id}}</td>
@@ -42,6 +52,13 @@
                 </td>
             </tr>
         @endforelse
+        <tr>
+            <th colspan="5" class="text-center">Total</th>
+            <th>{{$total_amount}}</th>
+            <th>{{$paid_amount}}</th>
+            <th>{{$due_amount}}</th>
+
+        </tr>
         </tbody>
     </table>
 </div>
