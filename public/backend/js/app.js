@@ -3116,10 +3116,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditPurchase",
-  mounted: function mounted() {
-    var ps = new PerfectScrollbar('.perfect-ps');
-    var psForProduct = new PerfectScrollbar('.sell-card-product-scroll');
-    var psForCart = new PerfectScrollbar('.sell-cart-scroll');
+  mounted: function mounted() {// const ps = new PerfectScrollbar('.perfect-ps');
+    // const psForProduct = new PerfectScrollbar('.sell-card-product-scroll');
+    // const psForCart = new PerfectScrollbar('.sell-cart-scroll');
   },
   props: {
     purchase: Object
@@ -3301,7 +3300,7 @@ __webpack_require__.r(__webpack_exports__);
         total = this.purchase.total_amount;
       }
 
-      return parseFloat(total.toFixed(2));
+      return parseFloat(total);
     },
     currentDue: function currentDue() {
       if (this.summary.paid_amount > this.totalCartsValue) {
@@ -3309,7 +3308,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var due = this.totalCartsValue - this.summary.paid_amount;
-      return parseFloat(due.toFixed(2));
+      return parseFloat(due);
     },
     filteredProduct: function filteredProduct() {
       var _this6 = this;
@@ -3385,6 +3384,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -30822,6 +30827,30 @@ var render = function() {
                               " " +
                                 _vm._s(_vm.lang.print_invoice) +
                                 "\n                            "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "btn bg-success close btn-sm text-white",
+                            attrs: { target: "_blank" },
+                            on: {
+                              click: function($event) {
+                                return _vm.closeDrawer()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-arrow-left" }),
+                            _vm._v(
+                              " Back to purchcase\n                            "
                             )
                           ]
                         )

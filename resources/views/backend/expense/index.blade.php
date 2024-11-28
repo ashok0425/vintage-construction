@@ -38,9 +38,9 @@
                             <th class="text-center">{{__('pages.expense_date')}}</th>
                             @if (request()->query('other'))
                             <th class="text-center">Vehicle</th>
-                            <th class="text-center">Other Params</th>
-                            <th class="text-center">Start/End Point</th>                                
-                            @else 
+                            <th class="text-center">Qty</th>
+                            <th class="text-center">Start/End Point</th>
+                            @else
                             <th class="text-center">{{__('pages.expense_category')}}</th>
                             @endif
                             <th class="text-center">{{__('pages.amount')}}</th>
@@ -61,12 +61,12 @@
                                     {{$expense->vehicle->name}}
                                 </td>
                                 <td class="text-center">
-                                    {{$expense->other}} 
+                                    {{$expense->other}}  {{$expense->unit}}
                                 </td>
                                 <td class="text-center">
-                                    {{$expense->pickup_loc}}/{{$expense->drop_loc}} 
+                                    {{$expense->pickup_loc}}/{{$expense->drop_loc}}
                                 </td>
-                                @else 
+                                @else
                                 <td class="text-center"> {{$expense->expenseCategory ? $expense->expenseCategory->name : '--'}} </td>
                                 @endif
                                 <td class="text-center"> {{get_option('app_currency')}}{{number_format($expense->amount, 2)}} </td>

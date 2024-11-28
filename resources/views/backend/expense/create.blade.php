@@ -43,7 +43,7 @@
                         @if (request()->query('other'))
                         <div class="custom-form-group  col-md-6">
                             <label for="vehicle_id" class="custom-label">Select Vehicle <span class="text-danger">*</span></label>
-                            <select name="vehicle_id" id="vehicle_id" class="form-select select2-basic">
+                            <select name="vehicle_id" id="vehicle_id" class="form-select select2-basic" required>
                                 <option value="">Vehicle</option>
                                 @foreach($vehicles as $vehicle)
                                     <option value="{{$vehicle->id}}" {{old('vehicle') == $vehicle->id ? 'selected' : ''}}>{{$vehicle->name}}{{$vehicle->number}}</option>
@@ -55,10 +55,34 @@
                             @endif
                         </div>
                         <div class="custom-form-group col-md-6">
-                            <label for="other" class="custom-label">Other Param (other in ltr/ Time in hrs/No.of trip) <span class="text-danger">*</span></label>
+                            <label for="other" class="custom-label">Quantity <span class="text-danger">*</span></label>
                             <input type="text" name="other"  min="0" id="other" value="{{old('other')}}" placeholder="other" class="form-control" aria-describedby="emailHelp" required>
                             @if ($errors->has('other'))
                                 <div class="error">{{ $errors->first('other') }}</div>
+                            @endif
+                        </div>
+
+                        <div class="custom-form-group col-md-6">
+                            <label for="unit" class="custom-label">Unit (ltr,hours,trip)<span class="text-danger">*</span></label>
+                            <input type="text" name="unit"  min="0" id="unit" value="{{old('unit')}}" placeholder="unit" class="form-control" aria-describedby="emailHelp" required>
+                            @if ($errors->has('unit'))
+                                <div class="error">{{ $errors->first('unit') }}</div>
+                            @endif
+                        </div>
+
+
+                        <div class="custom-form-group col-md-6">
+                            <label for="unit_amount" class="custom-label">Unit Amount</label>
+                            <input type="number" name="unit_amount" step=".1" min="0" id="unit_amount" value="{{old('unit_amount')}}" onkeyup="calAmt(this.value)" placeholder="Unit Amount" class="form-control" aria-describedby="emailHelp">
+                            @if ($errors->has('unit_amount'))
+                                <div class="error">{{ $errors->first('unit_amount') }}</div>
+                            @endif
+                        </div>
+                        <div class="custom-form-group col-md-6">
+                            <label for="amount" class="custom-label">{{__('pages.amount')}}</label>
+                            <input type="number" name="amount" step=".1" min="0" id="amount" value="{{old('amount')}}" placeholder="{{__('pages.amount')}}" class="form-control" aria-describedby="emailHelp">
+                            @if ($errors->has('amount'))
+                                <div class="error">{{ $errors->first('amount') }}</div>
                             @endif
                         </div>
 
@@ -79,6 +103,7 @@
                             @endif
                         </div>
 
+
                         @else
                         <div class="custom-form-group col-md-6">
                             <label for="expense_category_id" class="custom-label">{{__('pages.expense_category')}} <span class="text-danger">*</span></label>
@@ -93,11 +118,6 @@
                                 <div class="error mt-1">{{ $errors->first('expense_category_id') }}</div>
                             @endif
                         </div>
-                        @endif
-
-
-
-
                         <div class="custom-form-group col-md-6">
                             <label for="amount" class="custom-label">{{__('pages.amount')}}</label>
                             <input type="number" name="amount" step=".1" min="0" id="amount" value="{{old('amount')}}" placeholder="{{__('pages.amount')}}" class="form-control" aria-describedby="emailHelp">
@@ -105,6 +125,9 @@
                                 <div class="error">{{ $errors->first('amount') }}</div>
                             @endif
                         </div>
+                        @endif
+
+
 
                         <div class="custom-form-group col-md-6 mb-4">
                             <label for="note" class="custom-label">{{__('pages.note')}}</label>
@@ -156,6 +179,16 @@
             // when the date is changed
             $(this).datepicker('hide');
         });
+
+
+        function calAmt(unit) {
+    let qty = document.querySelector('#other').value; // Get the quantity
+    let total = parseFloat(unit) * parseFloat(qty); // Calculate the total amount
+    if (!isNaN(total)) {
+        document.querySelector('#amount').value = total.toFixed(2); // Update the amount field
+    }
+}
+
     </script>
 @endsection
 

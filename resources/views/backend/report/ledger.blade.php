@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="col-md-2">
                                        <select name="type" id="" class="form-select">
-                                        <option value="">All</option>
+                                        <option value="">Over All</option>
                                         <option value="Income" {{Request::get('type') == 'Income' ? 'selected' : ''}}>Income</option>
                                         <option value="Purchase" {{Request::get('type') == 'Purchase' ? 'selected' : ''}}>Purchase</option>
                                         <option value="Expense" {{Request::get('type') == 'Expense' ? 'selected' : ''}}>Expense</option>

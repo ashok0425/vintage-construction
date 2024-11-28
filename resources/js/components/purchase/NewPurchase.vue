@@ -209,6 +209,12 @@
                                 <a v-bind:href="'../export/purchase/print-invoice/id='+purchase.id+'/type={print}'" @click="printInvoice = false" target="_blank" class="btn btn-brand btn-brand-warning btn-sm">
                                     <i class="fa fa-print"></i> {{lang.print_invoice}}
                                 </a>
+                                <br>
+                                <br>
+
+                                <a @click="closeDrawer()" target="_blank" class="btn bg-success close btn-sm text-white">
+                                    <i class="fa fa-arrow-left"></i> Back to purchcase
+                                </a>
                             </div>
 
                             <div class="text-center">

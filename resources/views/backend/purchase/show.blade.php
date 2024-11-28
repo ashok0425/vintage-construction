@@ -30,8 +30,8 @@
                             </tr>
 
                             <tr>
-                                <td>{{__('pages.branch')}}</td>
-                                <td>{{$purchase->branch->title}}</td>
+                                <td>Construction Site</td>
+                                <td>{{$purchase->customer->title}}</td>
                             </tr>
 
                             <tr>

@@ -356,9 +356,9 @@
     export default {
         name: "EditPurchase",
         mounted() {
-            const ps = new PerfectScrollbar('.perfect-ps');
-            const psForProduct = new PerfectScrollbar('.sell-card-product-scroll');
-            const psForCart = new PerfectScrollbar('.sell-cart-scroll');
+            // const ps = new PerfectScrollbar('.perfect-ps');
+            // const psForProduct = new PerfectScrollbar('.sell-card-product-scroll');
+            // const psForCart = new PerfectScrollbar('.sell-cart-scroll');
         },
         props : {
             purchase : Object,
@@ -539,7 +539,7 @@
                     total = this.purchase.total_amount;
                 }
 
-                return parseFloat((total).toFixed(2));
+                return parseFloat((total));
             },
 
             currentDue(){
@@ -548,7 +548,7 @@
                 }
 
                 let due = this.totalCartsValue - this.summary.paid_amount;
-                return parseFloat((due).toFixed(2));
+                return parseFloat((due));
             },
 
             filteredProduct: function () {
