@@ -148,13 +148,16 @@ class StockReportController extends Controller
    })->where('type',0)->get();
 
         $purchaseArray = $purchases->map(function($purchase) {
+            $productId=$purchase->purchaseProducts->pluck('product_id')->toArray();
+            $products=Product::whereIn('id',$productId)->pluck('title')->toArray();
+            $imp=implode(',',$products);
             return [
                 'id' => $purchase->id,
                 'date' => $purchase->purchase_date,
                 'credit' => $purchase->total_amount,
                  'debit'=>null,
                 'type' => 'Purchase',
-                'remark'=>'Being product purchase'
+                'remark'=>"purchase: ".$imp
             ];
         })->toArray();
 
