@@ -131,7 +131,9 @@ class StockReportController extends Controller
     public function ledger(Request $request){
         $purchases=Auth::user()->business->purchase()->when(!Auth::user()->can('do anything'),function($query){
             return $query->where('customer_id', Auth::user()->customer_id);
-        })->get();
+        })->when($request->customer_id,function($query) use ($request){
+            $query->where('customer_id', $request->customer_id);
+       })->get();
 
         $expenses=Auth::user()->business->expense()->when(!Auth::user()->can('do anything'),function($query){
             return $query->where('customer_id', Auth::user()->customer_id);
