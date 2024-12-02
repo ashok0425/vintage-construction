@@ -18,6 +18,7 @@ use App\Models\Settings;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Expense;
 use Illuminate\Support\Facades\Auth;
 
 class VeuApiController extends Controller
@@ -145,8 +146,9 @@ class VeuApiController extends Controller
 
         $dueAmount = Purchase::where('business_id', Auth::user()->business_id)->where('supplier_id', $id)->sum('total_amount');
         $paidAmount =  PaymentToSupplier::where('business_id', Auth::user()->business_id)->where('supplier_id', $id)->sum('amount');
+        $expense=Expense::where('business_id', Auth::user()->business_id)->where('supplier_id', $id)->sum('amount');
 
-        $due =  $dueAmount - $paidAmount;
+        $due =  $dueAmount - $paidAmount+$expense;
 
         $data['message'] = 'Total Due '. get_option('app_currency').' '. number_format($due,2);
         $data['due_amount'] = number_format($due, 2);

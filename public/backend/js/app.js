@@ -3698,7 +3698,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewPurchase",
   mounted: function mounted() {
@@ -30843,7 +30842,7 @@ var render = function() {
                             attrs: { target: "_blank" },
                             on: {
                               click: function($event) {
-                                return _vm.closeDrawer()
+                                _vm.printInvoice = false
                               }
                             }
                           },

@@ -211,8 +211,7 @@
                                 </a>
                                 <br>
                                 <br>
-
-                                <a @click="closeDrawer()" target="_blank" class="btn bg-success close btn-sm text-white">
+                                <a @click="printInvoice = false" target="_blank" class="btn bg-success close btn-sm text-white">
                                     <i class="fa fa-arrow-left"></i> Back to purchcase
                                 </a>
                             </div>

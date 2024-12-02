@@ -41,6 +41,20 @@
                         </div>
                         @endcan
                         @if (request()->query('other'))
+
+                        <div class="custom-form-group  col-md-6">
+                            <label for="supplier_id" class="custom-label">Select Supplier</label>
+                            <select name="supplier_id" id="supplier_id" class="form-select select2-basic">
+                                <option value="">Supplier</option>
+                                @foreach(Auth::user()->business->supplier as $supplier)
+                                    <option value="{{$supplier->id}}" {{old('supplier') == $supplier->id ? 'selected' : ''}}>{{$supplier->company_name}}</option>
+                                @endforeach
+                            </select>
+
+                            @if ($errors->has('supplier_id'))
+                                <div class="error mt-1">{{ $errors->first('supplier_id') }}</div>
+                            @endif
+                        </div>
                         <div class="custom-form-group  col-md-6">
                             <label for="vehicle_id" class="custom-label">Select Vehicle <span class="text-danger">*</span></label>
                             <select name="vehicle_id" id="vehicle_id" class="form-select select2-basic" required>
