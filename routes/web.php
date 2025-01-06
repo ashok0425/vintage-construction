@@ -120,6 +120,8 @@ Route::middleware('auth', 'active')->group(function () {
 
         Route::get('stock-report', 'Backend\StockReportController@index');
         Route::get('ledger', 'Backend\StockReportController@ledger');
+        Route::get('company-ledger', 'Backend\StockReportController@companyLedger');
+
 
         Route::get('stock-report/filter', 'Backend\StockReportController@filter');
         Route::get('stock-report-pdf', 'Backend\StockReportController@stockReportPdf');

@@ -61,10 +61,10 @@
                                         <span class="text-brand-muted me-2"> {{__('pages.purchase')}} :</span>
                                         <span>{{get_option('app_currency')}}{{$product->purchase_price}}</span>
                                     </div>
-                                    {{-- <div class="d-flex justify-content-center">
+                                    <div class="d-flex justify-content-center">
                                         <span class="text-brand-muted me-2"> {{__('pages.sell')}}:</span>
                                         <span>{{get_option('app_currency')}}{{$product->sell_price}}</span>
-                                    </div> --}}
+                                    </div>
 
                                     {{-- <div class="d-flex justify-content-center">
                                         <span class="text-brand-muted me-2">{{__('pages.stock_quantity')}}:</span>

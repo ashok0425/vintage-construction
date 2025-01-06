@@ -217,12 +217,20 @@
         <li class="aside-nav-heading"> {{__('pages.reports')}} </li>
     @endcan
 
+    @can('do anything')
+    <li class="aside-nav-item">
+        <a class="aside-nav-link {{ active_if_full_match('report/company-ledger') }}" href="{{url('report/company-ledger')}}">
+            <span class="aside-nav-icon"><i class="fas fa-chart-line"></i></span>
+            <span class="aside-nav-text">Company Ledger</span>
+        </a>
+    </li>
+@endcan
 
     @can('manage_ledger')
         <li class="aside-nav-item">
             <a class="aside-nav-link {{ active_if_full_match('report/ledger') }}" href="{{url('report/ledger')}}">
                 <span class="aside-nav-icon"><i class="fas fa-chart-line"></i></span>
-                <span class="aside-nav-text">Ledger</span>
+                <span class="aside-nav-text"> Ledger</span>
             </a>
         </li>
     @endcan

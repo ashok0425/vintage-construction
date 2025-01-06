@@ -4,10 +4,10 @@
             <div class="col-lg-4 purchase-products">
 
                 <div class="wiz-card sell-card-group">
-                    <div class="select-customer px-4 py-2">
+                    <!-- <div class="select-customer px-4 py-2">
                                     <v-select :options="customers" v-model="customer" label="site_name"
                                         placeholder="Select Construction Site"></v-select>
-                                </div>
+                                </div> -->
                     <div class="wiz-card-header py-2">
                         <h6 class="wiz-card-title">{{lang.purchase_products}}</h6>
                         <a href="javascript:void(0)" @click="chooseSupplier()" v-if="chooseSupplierBtn" class="btn btn-brand-secondary btn-brand btn-sm">{{lang.select_supplier}}</a>
@@ -421,11 +421,7 @@
             },
 
             submitPurchase:function(){
-                console.log(this.customer);
-                if (this.customer==null) {
-                    toastr.error('Please Select Construction Site')
-                    return false;
-                }
+
                 if (Object.keys(this.supplier).length === 0){
                     this.setSupplier = true;
                 }else{

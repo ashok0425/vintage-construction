@@ -16,19 +16,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sell-card-header pb-2 mb-2">
-                        <div class="wiz-box p-2">
-                            <div class="d-flex gap-2">
 
-                                <div class="flex-grow-1 select-customer">
-                                    <label for="">Supplier</label>
-                                    <v-select :options="suppliers" v-model="supplier" label="name"
-                                        placeholder="Select Supplier"></v-select>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
                     <div class="sell-card-body">
                         <div class="wiz-box d-flex flex-column h-100">
                             <div class="cart-products sell-card position-relative sell-cart-scroll">
@@ -60,10 +48,10 @@
                                             <td class="text-center w-100px">
                                                 <input type="number" v-model.number="cart.sell_price" step=".1" min=".1"
                                                     value="10" class="form-control form-control-sm text-center"
-                                                    v-if="cart.price_type == 1" readonly>
-                                                <input type="number" v-model.number="cart.sell_price" step=".1" min=".1"
+                                                   readonly>
+                                                <!-- <input type="number" v-model.number="cart.sell_price" step=".1" min=".1"
                                                     value="10" class="form-control form-control-sm text-center"
-                                                    v-if="cart.price_type == 2">
+                                                    v-if="cart.price_type == 2"> -->
                                             </td>
                                             <td class="text-center w-125px">
                                                 <div class="input-group input-group-sm">
@@ -124,12 +112,7 @@
                                 <div class="d-flex gap-1 justify-content-end pe-2">
                                     <div><a href="javascript:void(0)" class="btn btn-brand btn-brand-primary btn-sm"
                                             @click="createPayment()">Add Stock</a></div>
-                                    <!-- <div><a href="javascript:void(0)" v-on:click="archiveDrafts = true"
-                                            class="btn btn-brand btn-brand-secondary btn-sm"><i
-                                                class="fas fa-boxes"></i> {{ drafts.length }} </a></div>
-                                    <div><a href="javascript:void(0)" @click="archiveToDraft()"
-                                            class="btn btn-brand btn-brand-warning btn-sm px-3"><i
-                                                class="fas fa-grip-lines-vertical"></i> </a></div> -->
+
                                     <div><a href="javascript:void(0);" @click="clearAll()"
                                             class="btn btn-brand btn-brand-danger btn-sm"><i
                                                 class="bi bi-trash"></i></a></div>
@@ -198,52 +181,7 @@
                 </div>
             </div>
         </div>
-        <div class="drawer shadow right responsive-drawer" :class="{ show: createCustomer }">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h6 class="card-title">{{ lang.create_customer }}</h6>
-                    <button class="close" @click="closeDrawer()"><i class="bi bi-x-lg"></i></button>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                                <label class="custom-label">{{ lang.name }} <span class="text-danger">*</span></label>
-                                <input type="text" v-model="new_customer.name" placeholder="Full Name"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                                <label class="custom-label">{{ lang.phone }} <span class="text-danger">*</span></label>
-                                <input type="text" v-model="new_customer.phone" placeholder="Phone Number"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                                <label class="custom-label">{{ lang.email }} </label>
-                                <input type="email" v-model="new_customer.email" placeholder="Email Address"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                                <label class="custom-label">{{ lang.address }} </label>
-                                <input type="text" v-model.number="new_customer.address" placeholder="Address"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group d-flex justify-content-end">
-                                <button type="submit" class="btn btn-brand-primary btn-brand"
-                                    @click="storeCustomer()">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="drawer shadow right responsive-drawer drawer-lg" :class="{ show: createPaymentDrawer }">
             <div class="card shadow mb-4">
                 <div class="card-header">
@@ -324,30 +262,7 @@
                                                         <td> {{ appConfig('app_currency') }}{{ summary.grand_total_price |
                                                             formatNumber}} </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td colspan="5" class="text-end pe-5">
-                                                            <strong v-if="summary.payment_type == 1">{{ lang.cash_paid }}:
-                                                            </strong>
-                                                            <strong v-if="summary.payment_type == 2">{{ lang.card_paid }}:
-                                                            </strong>
-                                                        </td>
-                                                        <td>
-                                                            <strong> {{ appConfig('app_currency') }}{{ summary.paid_amount
-                                                                | formatNumber}} </strong>
-                                                        </td>
-                                                    </tr>
-                                                    <tr v-if="summary.due_amount > 0">
-                                                        <td colspan="5" class="text-end pe-5"> {{ lang.due_amount }}:
-                                                        </td>
-                                                        <td> {{ appConfig('app_currency') }}{{ summary.due_amount |
-                                                            formatNumber}} </td>
-                                                    </tr>
-                                                    <tr v-if="summary.change_amount > 0">
-                                                        <td colspan="5" class="text-end pe-5"> {{ lang.change_amount }}:
-                                                        </td>
-                                                        <td> {{ appConfig('app_currency') }}{{ summary.change_amount |
-                                                            formatNumber}} </td>
-                                                    </tr>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -421,26 +336,7 @@
                                                             <td> {{ appConfig('app_currency') }}{{ sell.grand_total_price |
                                                                 formatNumber}} </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td colspan="5" class="text-right pr-5">
-                                                                <strong
-                                                                    v-if="sell.payment_type == 1">{{ lang.cash_paid }}:
-                                                                </strong>
-                                                                <strong
-                                                                    v-if="sell.payment_type == 2">{{ lang.card_paid }}:
-                                                                </strong>
-                                                            </td>
-                                                            <td>
-                                                                <strong> {{ appConfig('app_currency') }}{{ sell.paid_amount
-                                                                    | formatNumber}} </strong>
-                                                            </td>
-                                                        </tr>
-                                                        <tr v-if="">
-                                                            <td colspan="5" class="text-right pr-5">
-                                                                {{ lang.due_amount }}: </td>
-                                                            <td> {{ appConfig('app_currency') }}{{ sell.due_amount |
-                                                                formatNumber}} </td>
-                                                        </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -491,18 +387,11 @@
                                         <textarea v-model="summary.card_information" class="form-control small" rows="3"
                                             placeholder="Card Information"></textarea>
                                     </div>
-                                    <div class="d-flex gap-2">
-                                        <div class="flex-grow-1"><a href="javasctipt:void(0)"
-                                                class="btn btn-brand-secondary w-100"
-                                                @click="paymentTypeCash">{{ lang.cash }}</a></div>
-                                        <div class="flex-grow-1"><a href="javasctipt:void(0)"
-                                                class="btn btn-brand-dark-navy w-100"
-                                                @click="paymentTypeCard">{{ lang.card }}</a></div>
-                                    </div>
+
                                     <div class="mt-2">
                                         <a href="javascript:void(0)" class="btn btn-brand btn-brand-primary w-100"
                                             v-if="!this.isSellStoreProcessing"
-                                            @click="storeSell()">{{ lang.confirm_payment }}</a>
+                                            @click="storeSell()">Confirm</a>
                                         <a href="javascript:void(0)" class="btn btn-brand btn-brand-primary w-100"
                                             v-if="this.isSellStoreProcessing">
                                             <div class="spinner-border text-danger" role="status">
@@ -524,45 +413,13 @@
                 </div>
             </div>
         </div>
-        <div class="drawer shadow right responsive-drawer" :class="{ show: archiveDrafts }">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h6 class="card-title">{{ lang.draft }}</h6>
-                    <button class="close" v-on:click="archiveDrafts = false"><i class="bi bi-x-lg"></i></button>
-                </div>
-                <div class="card-body">
-                    <div class="form-group mb-3">
-                        <input type="text" v-model="filter.draft_search_key" autofocus class="form-control"
-                            :placeholder="lang.draft_search_key">
-                    </div>
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item">
-                            <div class="row mb-2" v-for="(draft, index)  in filteredDratfs">
-                                <div class="col-md-11">
-                                    <a href="javascript:void(0)"
-                                        class="list-group-item list-group-item-action rounded-0"
-                                        @click="selectDraft(index, draft.id)"> {{ draft.inquiry_id }},
-                                        {{ draft.customer.name }} , {{ draft.customer.phone }} </a>
-                                </div>
-                                <div class="col-md-1" @click="deleteDraft(index, draft.id)">
-                                    <a href="jabascript:void(0)"><i class="bi bi-trash text-danger"></i> </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <!-- /.container-fluid -->
 </template>
 <script>
 export default {
-    mounted() {
-        const ps = new PerfectScrollbar('.perfect-ps');
-        const psForProduct = new PerfectScrollbar('.sell-card-product-scroll');
-        const psForCart = new PerfectScrollbar('.sell-cart-scroll');
-    },
+
     name: "NewSell",
     props: {
         all_categories: Array,
@@ -740,25 +597,6 @@ export default {
         },
 
 
-        archiveToDraft: function () {
-            if (this.customer != null) {
-                if (this.carts.length != 0) {
-                    axios.post('../vue/api/store-draft', { carts: JSON.parse(JSON.stringify(this.carts)), customer: JSON.parse(JSON.stringify(this.customer)), summary: this.summary }).then((response) => {
-                        this.drafts.unshift(response.data)
-                        this.clearAll();
-                    }).catch((error) => {
-                        console.error(error);
-                    });
-                } else {
-                    toastr["error"]("!Empty Cart");
-                    return false;
-                }
-            } else {
-                toastr["error"]("Please select a site");
-                return false;
-            }
-
-        },
 
         selectDraft: function (index, draft_id) {
             this.carts = [];
@@ -792,21 +630,6 @@ export default {
             this.createPaymentDrawer = false
         },
 
-        storeCustomer: function () {
-            if (this.customerValidation()) {
-                axios.post('../vue/api/store-customer', { new_customer: JSON.parse(JSON.stringify(this.new_customer)) }).then((response) => {
-                    this.customer = response.data;
-                    this.customers.push(response.data);
-                    this.new_customer.name = '';
-                    this.new_customer.phone = '';
-                    this.new_customer.email = '';
-                    this.new_customer.address = '';
-                    this.createCustomer = false;
-                }).catch((error) => {
-                    console.error(error);
-                });
-            };
-        },
 
         closeDrawer: function () {
             if (this.createCustomer == true) {
@@ -855,40 +678,9 @@ export default {
             });
         },
 
-        customerValidation: function () {
-            let result = false;
-
-            if (this.new_customer.name != '') {
-                result = true;
-            } else {
-                toastr["error"]("Customer name is required");
-                result = false
-            }
-
-            if (this.new_customer.phone != '') {
-                result = true;
-            } else {
-                toastr["error"]("Phone number is required");
-                result = false
-            }
-
-            this.customers.forEach((customer) => {
-                if (this.new_customer.phone != '') {
-                    if (customer.phone == this.new_customer.phone) {
-                        toastr["error"]("Phone number should be Unique");
-                        this.new_customer.phone = '';
-                        result = false
-                    } else {
-                        result = true;
-                    }
-                }
-            });
-
-            return result;
-        },
 
         sellStoreValidation: function () {
-            if (this.customer != null&&this.supplier != null) {
+            if (this.customer != null) {
                 return true;
             } else {
                 toastr["error"]("Please select a site");

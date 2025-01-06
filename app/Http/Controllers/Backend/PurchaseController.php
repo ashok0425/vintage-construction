@@ -92,7 +92,7 @@ class PurchaseController extends Controller
 
         $purchase = new Purchase();
         $purchase->supplier_id = $request->supplier['id'];
-        $purchase->customer_id = $request->customer['id']??Auth::user()->customer_id;
+        // $purchase->customer_id = $request->customer['id']??Auth::user()->customer_id;
         $purchase->total_amount = $request->summary['total_amount'];
         $purchase->paid_amount = $request->summary['paid_amount'];
         $purchase->due_amount = $request->summary['due_amount'];
@@ -204,7 +204,7 @@ class PurchaseController extends Controller
         $purchase->total_amount = $request->summary['total_amount'];
         $purchase->paid_amount = $request->summary['paid_amount'];
         $purchase->due_amount = $request->summary['due_amount'];
-        $purchase->customer_id = $request->customer['id']??Auth::user()->customer_id;
+        // $purchase->customer_id = $request->customer['id']??Auth::user()->customer_id;
         $purchase->save();
 
         Auth::user()->business->purchaseProduct()->where('purchase_id',$id)->delete();

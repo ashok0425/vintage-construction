@@ -83,7 +83,7 @@
 
 
 
-                                {{-- <div class="col-md-3">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="sell_price" class="custom-label">{{__('pages.sell_price')}} <span class="text-danger">*</span></label>
                                         <input type="number" step=".01"  min="0" name="sell_price" id="sell_price" value="{{old('sell_price')}}" placeholder="{{__('pages.sell_price')}}" class="form-control">
@@ -91,7 +91,7 @@
                                             <div class="error">{{ $errors->first('sell_price') }}</div>
                                         @endif
                                     </div>
-                                </div> --}}
+                                </div>
 
                                 {{-- <div class="col-md-3">
                                     <div class="form-group">

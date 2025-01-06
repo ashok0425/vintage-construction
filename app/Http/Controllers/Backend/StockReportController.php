@@ -129,7 +129,7 @@ class StockReportController extends Controller
 
 
     public function ledger(Request $request){
-        $purchases=Auth::user()->business->purchase()->when(!Auth::user()->can('do anything'),function($query){
+        $purchases=Auth::user()->business->sell()->when(!Auth::user()->can('do anything'),function($query){
             return $query->where('customer_id', Auth::user()->customer_id);
         })->when($request->customer_id,function($query) use ($request){
             $query->where('customer_id', $request->customer_id);
@@ -148,13 +148,13 @@ class StockReportController extends Controller
    })->where('type',0)->get();
 
         $purchaseArray = $purchases->map(function($purchase) {
-            $productId=$purchase->purchaseProducts->pluck('product_id')->toArray();
+            $productId=$purchase->sellProducts->pluck('product_id')->toArray();
             $products=Product::whereIn('id',$productId)->pluck('title')->toArray();
             $imp=implode(',',$products);
             return [
                 'id' => $purchase->id,
-                'date' => $purchase->purchase_date,
-                'credit' => $purchase->total_amount,
+                'date' => $purchase->sell_date,
+                'credit' => $purchase->grand_total_price,
                  'debit'=>null,
                 'type' => 'Purchase',
                 'remark'=>"purchase: ".$imp
@@ -208,6 +208,81 @@ class StockReportController extends Controller
             return $query->where('id', Auth::user()->customer_id);
         })->get();
        return view('backend.report.ledger',compact('ledgers',
+       'customers'
+    ));
+
+    }
+
+
+
+    public function companyLedger(Request $request){
+        $purchases=Auth::user()->business->purchase()->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('customer_id', Auth::user()->customer_id);
+        })->when($request->customer_id,function($query) use ($request){
+            $query->where('customer_id', $request->customer_id);
+       })->get();
+
+       $sells=Auth::user()->business->sell()->when(!Auth::user()->can('do anything'),function($query){
+        return $query->where('customer_id', Auth::user()->customer_id);
+    })->when($request->customer_id,function($query) use ($request){
+        $query->where('customer_id', $request->customer_id);
+   })->get();
+
+
+
+        $purchaseArray = $purchases->map(function($purchase) {
+            $productId=$purchase->purchaseProducts->pluck('product_id')->toArray();
+            $products=Product::whereIn('id',$productId)->pluck('title')->toArray();
+            $imp=implode(',',$products);
+            return [
+                'id' => $purchase->id,
+                'date' => $purchase->purchase_date,
+                'credit' => $purchase->total_amount,
+                 'debit'=>null,
+                'type' => 'Purchase',
+                'remark'=>"purchase: ".$imp
+            ];
+        })->toArray();
+
+
+        $sellArray = $sells->map(function($sell) {
+            $productId=$sell->sellProducts->pluck('product_id')->toArray();
+            $products=Product::whereIn('id',$productId)->pluck('title')->toArray();
+            $imp=implode(',',$products);
+            return [
+                'id' => $sell->id,
+                'date' => $sell->sell_date,
+                'debit' => $sell->grand_total_price,
+                'credit'=>null,
+                'type' => 'Sell',
+                'remark'=>"Sell: ".$imp
+            ];
+        })->toArray();
+
+
+        $ledgers=collect(array_merge($purchaseArray,$sellArray))
+        ->sortByDesc('date')
+        ->values();
+        if ($request->type) {
+            $ledgers = $ledgers->where('type', $request->type)->values();
+        }
+        if ($request->month) {
+            $ledgers = $ledgers->filter(function ($entry) use ($request) {
+                return Carbon::parse($entry['date'])->month ==  Carbon::parse($request->month)->month;
+            })->values();
+        }
+
+        // Filter by year if provided
+        if ($request->year) {
+            $ledgers = $ledgers->filter(function ($entry) use ($request) {
+                return Carbon::parse($entry['date'])->year ==  $request->year;
+            })->values();
+        }
+        $ledgers=$ledgers->toArray();
+        $customers= Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
+            return $query->where('id', Auth::user()->customer_id);
+        })->get();
+       return view('backend.report.company-ledger',compact('ledgers',
        'customers'
     ));
 

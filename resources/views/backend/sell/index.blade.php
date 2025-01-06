@@ -25,7 +25,7 @@
                             <select name="customer_id" class="form-select select2-basic">
                                 <option value="">All Site</option>
                                 @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}" {{Request::get('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->name}}, {{$customer->phone}} </option>
+                                    <option value="{{$customer->id}}" {{Request::get('customer_id') == $customer->id ? 'selected' : ''}}>{{$customer->site_name}} </option>
                                 @endforeach
                             </select>
                         </div>

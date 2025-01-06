@@ -1,6 +1,6 @@
 <form action="{{route('payment-to-supplier.index')}}" method="get">
     <div class="row g-3">
-        <div class="col-sm-6 col-md-4 col-lg">
+        {{-- <div class="col-sm-6 col-md-4 col-lg">
             <div class="form-group">
                 <select name="customer_id" class="form-select select2-basic">
                     <option value="">All Site</option>
@@ -9,7 +9,7 @@
                     @endforeach
                 </select>
             </div>
-        </div>
+        </div> --}}
         <div class="col-sm-6 col-lg-4 col-xl">
             <div class="form-group">
                 <select name="supplier_id" class="form-select select2-basic">

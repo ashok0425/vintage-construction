@@ -21,7 +21,7 @@
                                 <div class="error">{{ $errors->first('payment_date') }}</div>
                             @endif
                         </div>
-                        @can('do anything')
+                        {{-- @can('do anything')
                         <div class="custom-form-group col-md-6 col-md-6">
                             <label for="customer_id" class="custom-label">Construction Site <span class="text-danger">*</span></label>
                             <select name="customer_id" id="customer_id" class="form-select select2-basic" required>
@@ -35,7 +35,7 @@
                                 <div class="error mt-1">{{ $errors->first('customer_id') }}</div>
                             @endif
                         </div>
-                        @endcan
+                        @endcan --}}
 
                         <div class="custom-form-group col-md-6">
                             <label for="supplier_id" class="custom-label">{{__('pages.supplier')}} <span class="text-danger">*</span></label>

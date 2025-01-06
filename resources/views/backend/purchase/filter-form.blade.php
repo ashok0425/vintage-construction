@@ -6,7 +6,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-md-4 col-lg">
+        {{-- <div class="col-sm-6 col-md-4 col-lg">
             <div class="form-group">
                 <select name="customer_id" class="form-select select2-basic">
                     <option value="">All Site</option>
@@ -15,7 +15,7 @@
                     @endforeach
                 </select>
             </div>
-        </div>
+        </div> --}}
         <div class="col-sm-6 col-md-4 col-lg">
             <div class="form-group">
                 <select name="supplier_id" class="form-control select2-basic">

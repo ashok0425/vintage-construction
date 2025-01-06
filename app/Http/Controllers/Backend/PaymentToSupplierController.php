@@ -39,9 +39,9 @@ class PaymentToSupplierController extends Controller
         if ($request->supplier_id){
             $payments = $payments->where('supplier_id', $request->supplier_id);
         }
-        if ($request->customer_id){
-            $payments = $payments->where('customer_id', $request->customer_id);
-        }
+        // if ($request->customer_id){
+        //     $payments = $payments->where('customer_id', $request->customer_id);
+        // }
 
         if ($request->start_date || $request->end_date ){
             $start_date = $request->start_date ? $request->start_date : PaymentToSupplier::oldest()->pluck('payment_date')->first();
