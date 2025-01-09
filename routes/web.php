@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,8 @@ Auth::routes();
 
 
 Route::middleware('auth', 'active')->group(function () {
+    Route::resource('investments', Backend\InvestmentController::class);
+
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index');
 

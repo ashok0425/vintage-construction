@@ -45,12 +45,9 @@
                                             <button class="btn btn-brand btn-brand-primary">{{__('pages.search')}}</button>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
                         </form>
-
             </div>
         </div>
 

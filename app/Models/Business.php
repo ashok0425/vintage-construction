@@ -85,4 +85,7 @@ class Business extends Model
     public function vehicle(){
         return $this->hasMany(Vehicle::class);
     }
+    public function investment(){
+        return $this->hasMany(Investment::class);
+    }
 }
