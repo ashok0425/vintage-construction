@@ -25,6 +25,14 @@
     @endcan
 
 
+    @can('manage_investment')
+    <li class="aside-nav-item">
+        <a class="aside-nav-link {{ active_if_full_match('investments') }} {{ active_if_full_match('investments/create') }} {{ active_if_full_match('investments/*/edit') }} {{ active_if_full_match('investments/*') }}" href="{{route('investments.index')}}"><span class="aside-nav-icon"><i class="fas fa-dollar"></i></span> <span class="aside-nav-text">Manage Investment</span></a>
+
+    </li>
+    @endcan
+
+
     @canany(['manage_category', 'manage_tax', 'manage_product', 'manage_unit'])
         <li class="aside-nav-heading"> {{__('pages.sells_marketing')}} </li>
         <li class="aside-nav-item toggleable-group">
