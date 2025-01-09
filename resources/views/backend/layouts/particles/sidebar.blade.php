@@ -85,6 +85,27 @@
         </li>
     @endcan
 
+
+    @canany(['manage_sell_invoice'])
+    <li class="aside-nav-item toggleable-group">
+        <a class="aside-nav-link toggler {{ active_if_match('sell') }}" href="javascript:void(0)">
+            <span class="aside-nav-icon"><i class="fas fa-list"></i></span>
+            <span class="aside-nav-text">{{__('pages.manage_sell')}}</span>
+            <span class="aside-nav-dropdown-icon"></span>
+        </a>
+        <div class="aside-dropdown toggleable-menu {{ active_if_match('sell') }}">
+            <ul class="aside-submenu">
+                @can('create_sell_invoice')
+                    <a class="aside-nav-link {{ active_if_full_match('sell/create') }}" href="{{route('sell.create')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.create_invoice')}}</span></a>
+                @endcan
+                @can('manage_sell_invoice')
+                    <a class="aside-nav-link {{ active_if_full_match('sell') }} {{ active_if_full_match('sell/*/edit') }} {{ active_if_full_match('sell/*') }}" href="{{route('sell.index')}}"><span class="aside-nav-icon"><i class="bi bi-circle"></i></span> <span class="aside-nav-text">{{__('pages.sell_invoice')}}</span></a>
+                @endcan
+            </ul>
+        </div>
+    </li>
+@endcan
+
     @canany(['manage_income', 'manage_income_category'])
     <li class="aside-nav-item toggleable-group">
         <a class="aside-nav-link toggler {{ active_if_match('income') }} {{ active_if_match('income-category') }}" href="javascript:void(0)">

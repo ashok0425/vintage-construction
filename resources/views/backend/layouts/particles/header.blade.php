@@ -173,10 +173,18 @@
                 @can('create_purchase_invoice')
                 <li class="nav-item">
                     <a class="text-nowrap btn btn-danger btn-sm" href="{{route('purchase.create')}}">
-                        <i class="fa fa-print me-2"></i> POS </span>
+                        <i class="fa fa-plus me-2"></i> PURCHASE </span>
                     </a>
                 </li>
             @endcan
+
+            @can('create_sell_invoice')
+            <li class="nav-item">
+                <a class="text-nowrap btn btn-danger btn-sm" href="{{route('sell.create')}}">
+                    <i class="fa fa-plus me-2"></i> Sell </span>
+                </a>
+            </li>
+        @endcan
             </ul>
         </div>
     </nav>
