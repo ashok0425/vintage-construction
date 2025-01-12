@@ -61,11 +61,12 @@
                             <th>{{__('pages.invoice_id')}}</th>
                             <th>Site Name</th>
                             <th>{{__('pages.sell_date')}}</th>
-                            <th>{{__('pages.sub_total')}}</th>
-                            <th>{{__('pages.discount')}}</th>
+                            {{-- <th>{{__('pages.sub_total')}}</th>
+                            <th>{{__('pages.discount')}}</th> --}}
                             <th>{{__('pages.grand_total')}}</th>
-                            <th>{{__('pages.paid_amount')}}</th>
-                            <th>{{__('pages.due_amount')}}</th>
+                            <th>Remark</th>
+                            {{-- <th>{{__('pages.paid_amount')}}</th>
+                            <th>{{__('pages.due_amount')}}</th> --}}
                             <th width="8%">{{__('pages.action')}}</th>
                         </tr>
                         </thead>
@@ -76,11 +77,16 @@
                                 <td>{{$sell->invoice_id}}</td>
                                 <td>{{$sell->customer->site_name}}</td>
                                 <td> @formatdate($sell->sell_date) </td>
-                                <td> {{get_option('app_currency')}}{{number_format($sell->sub_total, 2)}} </td>
-                                <td> {{get_option('app_currency')}}{{number_format($sell->discount, 2)}} </td>
+                                {{-- <td> {{get_option('app_currency')}}{{number_format($sell->sub_total, 2)}} </td>
+                                <td> {{get_option('app_currency')}}{{number_format($sell->discount, 2)}} </td> --}}
                                 <td> {{get_option('app_currency')}}{{number_format($sell->grand_total_price, 2)}} </td>
-                                <td> {{get_option('app_currency')}}{{number_format($sell->paid_amount, 2)}} </td>
-                                <td> {{get_option('app_currency')}}{{number_format($sell->due_amount, 2)}} </td>
+                                {{-- <td> {{get_option('app_currency')}}{{number_format($sell->paid_amount, 2)}} </td>
+                                <td> {{get_option('app_currency')}}{{number_format($sell->due_amount, 2)}} </td> --}}
+                                    <td>
+                                        @foreach ($sell->sellProducts as $sellProduct)
+                                             <small> {{$sellProduct->product?->title}},</small>
+                                        @endforeach
+                                    </td>
                                 <td class="font-14">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                         <a href="{{route('sell.edit', [$sell->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>

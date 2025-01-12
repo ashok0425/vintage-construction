@@ -46,17 +46,6 @@
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
-  'krishnahimself/laravel-ad-to-bs-converter' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Krishnahimself\\DateConverter\\DateConverterServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'DateConverter' => 'Krishnahimself\\DateConverter\\DateConverterFacade',
-    ),
-  ),
   'laravel/tinker' => 
   array (
     'providers' => 
@@ -69,6 +58,17 @@
     'providers' => 
     array (
       0 => 'Laravel\\Ui\\UiServiceProvider',
+    ),
+  ),
+  'maatwebsite/excel' => 
+  array (
+    'aliases' => 
+    array (
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+    ),
+    'providers' => 
+    array (
+      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     ),
   ),
   'milon/barcode' => 

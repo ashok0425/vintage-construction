@@ -66,10 +66,10 @@
                                         <span>{{get_option('app_currency')}}{{$product->sell_price}}</span>
                                     </div>
 
-                                    {{-- <div class="d-flex justify-content-center">
+                                    <div class="d-flex justify-content-center">
                                         <span class="text-brand-muted me-2">{{__('pages.stock_quantity')}}:</span>
                                         <span> {{$product->current_stock_quantity ?? 0}} {{$product->unit->title ?? ''}}</span>
-                                    </div> --}}
+                                    </div>
                                 </div>
 
                                 <ul class="list-inline text-center mt-3">

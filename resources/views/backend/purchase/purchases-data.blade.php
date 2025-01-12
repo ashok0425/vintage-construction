@@ -5,11 +5,11 @@
             <th>{{__('pages.sl')}}</th>
             <th>{{__('pages.invoice_id')}}</th>
             <th>{{__('pages.date')}}</th>
-             <th>Site</th>
             <th>{{__('pages.supplier')}}</th>
             <th>{{__('pages.total_amount')}}</th>
             <th>{{__('pages.paid_amount')}}</th>
             <th>{{__('pages.due_amount')}}</th>
+            <th>Remark</th>
             <th width="8%">{{__('pages.action')}}</th>
         </tr>
         </thead>
@@ -29,13 +29,16 @@
                 <td>{{$key+1}}</td>
                 <td>{{$purchase->invoice_id}}</td>
                 <td>{{$purchase->purchase_date->format(get_option('app_date_format'))}}</td>
-                    <td>
-                        {{$purchase->customer ? $purchase->customer->site_name : ''}}
-                    </td>
+
                 <td>{{$purchase->supplier ? $purchase->supplier->company_name : ''}}</td>
                 <td> {{get_option('app_currency')}}{{number_format($purchase->total_amount, 2)}} </td>
                 <td> {{get_option('app_currency')}}{{number_format($purchase->paid_amount, 2)}} </td>
                 <td> {{get_option('app_currency')}}{{number_format($purchase->due_amount, 2)}} </td>
+                <td>
+                    @foreach ($purchase->purchaseProducts as $purchaseProduct)
+                         <small> {{$purchaseProduct->product?->title}},</small>
+                    @endforeach
+                </td>
                 <td class="font-14">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                         <a href="{{route('purchase.edit', [$purchase->id])}}" class="mx-2 text-brand-primary"><i class="bi bi-pencil"></i></a>

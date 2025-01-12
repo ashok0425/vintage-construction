@@ -2,7 +2,7 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <div class="row g-3 sell-pos">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="sell-card-group">
                     <div class="sell-card-header pb-2 mb-2">
                         <div class="wiz-box p-2">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="sell-card-group">
                     <div class="sell-card-header">
                         <div class="wiz-box p-2">
@@ -146,7 +146,7 @@
                     <div class="sell-card-body sell-card-product-scroll">
                         <div class="p-2">
                             <div class="row g-3 justify-content-center all-products">
-                                <div class="col-md-3 col-6" v-for="(product, index) in filteredProduct"
+                                <div class="col-md-3 col-6" v-for="(product, index) in filteredProduct" :key="index"
                                     v-if="product.current_stock_quantity > 0">
                                     <div class="single-product" :class="{ selected: isAlreadyInCart(product.id) }"
                                         @click="addToCart(product.id)">
@@ -168,10 +168,14 @@
                                                 </div>
                                                 <div class="single-product-price">
                                                     {{ appConfig('app_currency') }}{{ product.sell_price }}</div>
+
                                             </div>
-                                            <div class="single-sku-price">
+                                            <!-- <div class="single-sku-price">
                                                 <small class="extra-small">Sku: {{ product.sku }}</small>
-                                            </div>
+                                            </div> -->
+                                            <div class="text-danger">
+                                                        Stock: {{ product.current_stock_quantity }}
+                                                    </div>
                                         </div>
                                     </div>
                                 </div>
@@ -401,11 +405,11 @@
                                     </div>
                                 </div>
                                 <div class="mt-5" v-if="sell.invoice_id != null">
-                                    <a @click="printInvoice" class="btn btn-brand-warning btn-brand w-100"
-                                        target="_blank">
-                                        <i class="fa fa-print me-2"></i> <br>
-                                        <strong>{{ lang.print_invoice }}</strong>
-                                    </a>
+
+                                    <br>
+                                    <a @click="closeCreatePaymentDrawer()" target="_blank" class="btn bg-success close btn-sm text-white">
+                                    <i class="fa fa-arrow-left"></i> Back to Sell
+                                </a>
                                 </div>
                             </div>
                         </div>
@@ -547,7 +551,8 @@ export default {
                             this.clearAll();
                             this.invoicePrintBtn = true;
                             this.isSellStoreProcessing = false;
-
+                            toastr.success('Stock transfer to site')
+                            //  location.reload();
                         }).catch((error) => {
                             console.error(error);
                             this.isSellStoreProcessing = false;

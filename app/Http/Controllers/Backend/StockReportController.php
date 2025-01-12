@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\LedgerExport;
 use App\Models\Branch;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -11,6 +12,7 @@ use App\Models\Customer;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockReportController extends Controller
 {
@@ -207,6 +209,10 @@ class StockReportController extends Controller
         $customers= Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
             return $query->where('id', Auth::user()->customer_id);
         })->get();
+        if (request()->query('export')) {
+            return Excel::download(new LedgerExport($ledgers), 'ledger.xlsx');
+
+        }
        return view('backend.report.ledger',compact('ledgers',
        'customers'
     ));
@@ -282,6 +288,10 @@ class StockReportController extends Controller
         $customers= Customer::where('business_id',Auth::user()->business_id)->when(!Auth::user()->can('do anything'),function($query){
             return $query->where('id', Auth::user()->customer_id);
         })->get();
+        if (request()->query('export')) {
+            return Excel::download(new LedgerExport($ledgers), 'ledger.xlsx');
+
+        }
        return view('backend.report.company-ledger',compact('ledgers',
        'customers'
     ));

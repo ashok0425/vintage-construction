@@ -44,6 +44,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group pt-2 pt-md-0 text-end">
                                             <button class="btn btn-brand btn-brand-primary">{{__('pages.search')}}</button>
+                                            <button name="export" class="btn btn-success" value="1"><i class="fas fa-file-excel"></i></button>
                                         </div>
                                     </div>
 

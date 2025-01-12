@@ -6462,6 +6462,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewSell",
   props: {
@@ -6600,6 +6604,7 @@ __webpack_require__.r(__webpack_exports__);
 
               _this3.invoicePrintBtn = true;
               _this3.isSellStoreProcessing = false;
+              toastr.success('Stock transfer to site'); //  location.reload();
             })["catch"](function (error) {
               console.error(error);
               _this3.isSellStoreProcessing = false;
@@ -35444,7 +35449,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row g-3 sell-pos" }, [
-      _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "col-md-5" }, [
         _c("div", { staticClass: "sell-card-group" }, [
           _c("div", { staticClass: "sell-card-header pb-2 mb-2" }, [
             _c("div", { staticClass: "wiz-box p-2" }, [
@@ -35935,7 +35940,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "col-md-7" }, [
         _c("div", { staticClass: "sell-card-group" }, [
           _c("div", { staticClass: "sell-card-header" }, [
             _c("div", { staticClass: "wiz-box p-2" }, [
@@ -36036,115 +36041,122 @@ var render = function() {
                   },
                   _vm._l(_vm.filteredProduct, function(product, index) {
                     return product.current_stock_quantity > 0
-                      ? _c("div", { staticClass: "col-md-3 col-6" }, [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "single-product",
-                              class: {
-                                selected: _vm.isAlreadyInCart(product.id)
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.addToCart(product.id)
+                      ? _c(
+                          "div",
+                          { key: index, staticClass: "col-md-3 col-6" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "single-product",
+                                class: {
+                                  selected: _vm.isAlreadyInCart(product.id)
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addToCart(product.id)
+                                  }
                                 }
-                              }
-                            },
-                            [
-                              _c("div", { staticClass: "ratio ratio-16x9" }, [
-                                _c(
-                                  "div",
-                                  { staticClass: "single-product-header" },
-                                  [
-                                    product.thumbnail != null
-                                      ? _c("img", {
-                                          staticClass: "img-fluid",
-                                          attrs: {
-                                            src: "../" + product.thumbnail
-                                          }
-                                        })
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    product.thumbnail == null
-                                      ? _c("img", {
-                                          staticClass: "img-fluid",
-                                          attrs: {
-                                            src: "../images/default.png"
-                                          }
-                                        })
-                                      : _vm._e()
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "single-product-body" },
-                                [
+                              },
+                              [
+                                _c("div", { staticClass: "ratio ratio-16x9" }, [
                                   _c(
                                     "div",
-                                    {
-                                      staticClass:
-                                        "d-flex justify-content-between gap-2"
-                                    },
+                                    { staticClass: "single-product-header" },
                                     [
-                                      _c("div", [
-                                        _c(
-                                          "h6",
-                                          {
-                                            staticClass: "single-product-title"
-                                          },
-                                          [
-                                            product.title.length < 15
-                                              ? _c("span", [
-                                                  _vm._v(_vm._s(product.title))
-                                                ])
-                                              : _c("span", [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      product.title.substring(
-                                                        0,
-                                                        15
-                                                      ) + ".."
-                                                    ) + " "
-                                                  )
-                                                ])
-                                          ]
-                                        )
-                                      ]),
+                                      product.thumbnail != null
+                                        ? _c("img", {
+                                            staticClass: "img-fluid",
+                                            attrs: {
+                                              src: "../" + product.thumbnail
+                                            }
+                                          })
+                                        : _vm._e(),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "single-product-price" },
-                                        [
-                                          _vm._v(
-                                            "\n                                                " +
-                                              _vm._s(
-                                                _vm.appConfig("app_currency")
-                                              ) +
-                                              _vm._s(product.sell_price)
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "single-sku-price" },
-                                    [
-                                      _c(
-                                        "small",
-                                        { staticClass: "extra-small" },
-                                        [_vm._v("Sku: " + _vm._s(product.sku))]
-                                      )
+                                      product.thumbnail == null
+                                        ? _c("img", {
+                                            staticClass: "img-fluid",
+                                            attrs: {
+                                              src: "../images/default.png"
+                                            }
+                                          })
+                                        : _vm._e()
                                     ]
                                   )
-                                ]
-                              )
-                            ]
-                          )
-                        ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "single-product-body" },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "d-flex justify-content-between gap-2"
+                                      },
+                                      [
+                                        _c("div", [
+                                          _c(
+                                            "h6",
+                                            {
+                                              staticClass:
+                                                "single-product-title"
+                                            },
+                                            [
+                                              product.title.length < 15
+                                                ? _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(product.title)
+                                                    )
+                                                  ])
+                                                : _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        product.title.substring(
+                                                          0,
+                                                          15
+                                                        ) + ".."
+                                                      ) + " "
+                                                    )
+                                                  ])
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "single-product-price"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.appConfig("app_currency")
+                                                ) +
+                                                _vm._s(product.sell_price)
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "text-danger" }, [
+                                      _vm._v(
+                                        "\n                                                    Stock: " +
+                                          _vm._s(
+                                            product.current_stock_quantity
+                                          ) +
+                                          "\n                                                "
+                                      )
+                                    ])
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       : _vm._e()
                   }),
                   0
@@ -37079,22 +37091,25 @@ var render = function() {
                   _vm._v(" "),
                   _vm.sell.invoice_id != null
                     ? _c("div", { staticClass: "mt-5" }, [
+                        _c("br"),
+                        _vm._v(" "),
                         _c(
                           "a",
                           {
                             staticClass:
-                              "btn btn-brand-warning btn-brand w-100",
+                              "btn bg-success close btn-sm text-white",
                             attrs: { target: "_blank" },
-                            on: { click: _vm.printInvoice }
+                            on: {
+                              click: function($event) {
+                                return _vm.closeCreatePaymentDrawer()
+                              }
+                            }
                           },
                           [
-                            _c("i", { staticClass: "fa fa-print me-2" }),
-                            _vm._v(" "),
-                            _c("br"),
-                            _vm._v(" "),
-                            _c("strong", [
-                              _vm._v(_vm._s(_vm.lang.print_invoice))
-                            ])
+                            _c("i", { staticClass: "fa fa-arrow-left" }),
+                            _vm._v(
+                              " Back to Sell\n                            "
+                            )
                           ]
                         )
                       ])
