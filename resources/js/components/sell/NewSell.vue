@@ -48,7 +48,7 @@
                                             <td class="text-center w-100px">
                                                 <input type="number" v-model.number="cart.sell_price" step=".1" min=".1"
                                                     value="10" class="form-control form-control-sm text-center"
-                                                   readonly>
+                                                   >
                                                 <!-- <input type="number" v-model.number="cart.sell_price" step=".1" min=".1"
                                                     value="10" class="form-control form-control-sm text-center"
                                                     v-if="cart.price_type == 2"> -->
